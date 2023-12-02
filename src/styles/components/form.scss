@@ -1,0 +1,92 @@
+.form-page{
+  background: #FAFAFA;
+  &__inner{
+    padding: 24px 0 86px 0;
+  }
+  &__card{
+    max-width: 819px;
+    width: 100%;
+    background: white;
+    margin-top: 24px;
+    padding: 24px;
+  }
+  &__header{
+    display: flex;
+    align-items: flex-start;
+    .logo{
+      width: 80px;
+      height: 80px;
+      img{
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+    .info{
+      margin-left: 24px;
+      p{
+        color: $black-color;
+        font-size: 20px;
+        margin-bottom: 16px;
+        font-weight: 600;
+        margin: 0;
+      }
+      span{
+        margin-top: 16px;
+        display: flex;
+        align-items: center;
+        font-size: 16px;
+        font-weight: 400;
+        svg,img{
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+  &__card{
+    &-title{
+      font-size: 20px;
+      line-height: 140%;
+      font-weight: 500;
+      color: $black-color;
+      margin: 0 0 24px 0;
+    }
+    &-category{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      .full{
+        width: 100%;
+      }
+      div{
+        width: max-content;
+        label{
+          display: block;
+          color: $grey-500;
+          font-size: 14px;
+          line-height: 20px;
+          margin-bottom: 6px;
+        }
+        &>span{
+          .item{
+            display: flex;
+            flex-wrap: wrap;
+            span{
+              height: 28px;
+              padding-left: 16px;
+              padding-right: 16px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              border: 1px solid #B9B1FC;
+              margin-right: 8px;
+              font-size: 14px;
+              font-weight: 400;
+              line-height: normal;
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+.loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  width: 100%;
+  z-index: 1000;
+}
+
+.loader-logo {
+  margin-left: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: auto;
+  img{
+    max-width: 130px;
+    width: 0;
+    max-height: 100px;
+    animation: loadAnimation 1.5s infinite;
+    position: relative;
+  }
+}
+
+@keyframes loadAnimation {
+  to {
+    width: 100%; /* Логотип расширяется до полной ширины */
+  }
+}

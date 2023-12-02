@@ -1,0 +1,73 @@
+.opportunity{
+  background: $purple-light-bg;
+  width: 100%;
+  overflow: hidden;
+  .container{
+    overflow-x: visible;
+  }
+  &__inner{
+    padding: 80px 0;
+    position: relative;
+    overflow-x: visible;
+    .title{
+      margin-bottom: 40px;
+    }
+    .splide{
+      position: relative;
+      right: 0;
+      width: max-content;
+      .splide_list{
+        margin: -12px !important;
+      }
+    }
+    .splide__arrows{
+      .splide__arrow--prev{
+        left: calc(1240px - 96px);
+      }
+      .splide__arrow--next{
+        right: auto;
+        left: calc(1240px - 40px);
+      }
+      .splide__arrow{
+        top: -64px;
+        width: 40px;
+        height: 40px;
+        background: white;
+        border-radius: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 1;
+      }
+    }
+    .splide__slide{
+      background: $white;
+      max-width: 384px;
+      width: 100%;
+      margin: 12px;
+      padding: 24px;
+      .slide-item{
+        img{
+          max-width: 275px;
+          max-height: 220px;
+          width: 100%;
+          object-fit: contain;
+          margin-bottom: 32px;
+        }
+      }
+      .slide-title{
+        color: $black-color;
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 140%;
+        margin-bottom: 16px;
+      }
+      .slide-description{
+        font-size: 16px;
+        color: $black-color;
+        line-height: 125%;
+        font-weight: 400;
+      }
+    }
+  }
+}
