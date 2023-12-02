@@ -69,3 +69,24 @@
     }
   }
 }
+
+@media (max-width: 580px){
+  .articles{
+    &__cards{
+      .main-articles__card{
+        width: 100%;
+        margin-right: 0;
+      }
+    }
+    &__current{
+      padding: 16px;
+      h3{
+        font-size: 28px;
+        line-height: 115%;
+      }
+      .img{
+        height: 200px;
+      }
+    }
+  }
+}
