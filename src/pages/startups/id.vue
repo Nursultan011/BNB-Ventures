@@ -9,33 +9,52 @@
           <li class="breadcrumb-item">
             <router-link to="/startups">Найти стартап</router-link>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">стартап</li>
+          <li
+            class="breadcrumb-item active"
+            aria-current="page"
+            v-if="card && card.startup_stage_name"
+          >
+            {{ card.startup_stage_name }}
+          </li>
         </Breadcrumb>
-        <p class="title">Ubex</p>
+        <p class="title" v-if="card && card.startup_stage_name">
+          {{ card.startup_stage_name }}
+        </p>
         <div class="inner-page__card">
           <div class="logo">
-            <img src="../../assets/images/member1.png" alt="" />
+            <img v-if="card && card.logo" :src="card.logo" alt="" />
           </div>
           <div class="inner-page__card-content">
-            <div class="full">
+            <div class="full" v-if="card && card.description">
               <label for="">Описание</label>
               <p>
-                Стартап повышает эффективность рекламы за счёт современных технологий и
-                качественного сервиса
+                {{ card.description }}
               </p>
             </div>
-            <div>
+            <div v-if="card && card.organization_year">
               <label for="">Год основания</label>
-              <p>2023</p>
+              <p>
+                {{ card.organization_year }}
+              </p>
             </div>
-            <div>
+            <div v-if="card && card.employees_count">
               <label for="">Количество сотрудников</label>
-              <p>10</p>
+              <p>{{ card.employees_count }}</p>
             </div>
             <div class="full">
-              <label> Технология и направления </label>
-              <div class="item">
-                <span> AdTech & MarTech </span>
+              <label> Направления </label>
+              <div class="item" v-if="card && card.industries">
+                <span v-for="(item, i) in card.industries" :key="i">
+                  {{ item }}
+                </span>
+              </div>
+            </div>
+            <div class="full">
+              <label> Технология </label>
+              <div class="item" v-if="card && card.technologies">
+                <span v-for="(item, i) in card.technologies" :key="i">
+                  {{ item }}
+                </span>
               </div>
             </div>
           </div>

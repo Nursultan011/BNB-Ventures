@@ -49,6 +49,16 @@ body{
   }
 }
 
+@media (max-width: 1260px){
+  body{
+    display: none;
+  }
+}
+
+.transparent{
+  background: transparent !important;
+}
+
 .main-button{
   background: $main-color;
   border: none;

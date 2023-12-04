@@ -10,21 +10,42 @@ const getters = {
 };
 
 const actions = {
-  async getProfile({ commit }, event) {
+  async getProfile({ commit, rootState }) {
     try {
-      if (event) {
-        const response = await axiosInstance.get(`/profiles/users/${event.type}/${event.id}`);
+      const user = rootState.auth.user;
+      const token = user.token;
 
+      const response = await axiosInstance.get(`/users/profile/`, {
+        headers: { Authorization: `Token ${token}` }
+      });
+
+      if (response.data) {
         commit('setProfile', response.data);
+        return response.data;
+      }
+    } catch (error) {
+      console.error('Ошибка:', error);
+      // Обработка ошибок
+    }
+  },
+  async updatePassword({ commit, rootState }, body) {
+    try {
+      const user = rootState.auth.user;
+      const token = user.token;
 
-        if (response.data) {
-          console.log(response.data)
-        }
+      const response = await axiosInstance.put(`/users/password-update/`, body, {
+        headers: { Authorization: `Token ${token}` }
+      });
+
+      if (response.data) {
+        localStorage.removeItem("setUser");
+        commit('setUser', null);
 
         return response.data;
       }
     } catch (error) {
       console.error('Ошибка:', error);
+      return error.response;
       // Обработка ошибок
     }
   },
@@ -52,17 +73,13 @@ const actions = {
         if (response.data && Array.isArray(response.data) && response.data.length >= 1) {
           commit('setForm', response.data[0])
           return response.data[0];
-        } else if (response.data && Array.isArray(response.data) && response.data.length === 0) {
-          return {
-            empty: true
-          }
         }
       }
     } catch (error) {
       console.error('Ошибка:', error);
       // Обработка ошибок
     }
-  }
+  },
 };
 
 const mutations = {

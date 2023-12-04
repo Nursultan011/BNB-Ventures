@@ -21,6 +21,8 @@
       .wrap{
         border: none;
         background: white;
+        display: flex;
+        flex-direction: column;
         h3{
           flex: 1;
         }

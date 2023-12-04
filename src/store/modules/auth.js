@@ -23,6 +23,7 @@ const actions = {
       return response.data;
     } catch (error) {
       console.error('Ошибка аутентификации', error);
+      throw error.response;
       // Обработка ошибок
     }
   },
@@ -37,7 +38,7 @@ const actions = {
     } catch (error) {
       console.error('Ошибка аутентификации', error);
       // Обработка ошибок
-      throw error;
+      throw error.response;
     }
   },
   async sendCode({ commit }, email) {

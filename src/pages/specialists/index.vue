@@ -6,34 +6,70 @@
           <li class="breadcrumb-item">
             <router-link to="/">Главная</router-link>
           </li>
-          <li class="breadcrumb-item active" aria-current="page">Специалисты</li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Специалисты
+          </li>
         </Breadcrumb>
         <p class="title">Специалисты</p>
-        <div class="description" v-if="cards">Всего {{ cards.length }} специалистов</div>
+        <div class="description" v-if="cards">
+          Всего {{ cards.length }} специалистов
+        </div>
         <div class="search__wrap">
-          <div class="filters">Фильтр</div>
+          <div class="filters">
+            <p class="filters__title">Фильтр</p>
+            <div class="filters__items" v-if="filters && filters.industries">
+              <p>Индустрии</p>
+              <div v-for="(flt, i) in filters.industries" :key="i">
+                <input
+                  type="checkbox"
+                  :value="flt.id"
+                  @change="updateSelectedFilters(flt.id, 'industries')"
+                />
+                <span>{{ flt.name }}</span>
+              </div>
+            </div>
+            <div class="filters__items" v-if="filters && filters.technologies">
+              <p>Технологии</p>
+              <div v-for="(flt, i) in filters.technologies" :key="i">
+                <input
+                  type="checkbox"
+                  :value="flt.id"
+                  @change="updateSelectedFilters(flt.id, 'technologies')"
+                />
+                <span>{{ flt.name }}</span>
+              </div>
+            </div>
+          </div>
           <div class="search__content">
             <div class="search__input">
               <input type="text" placeholder="Поиск" />
             </div>
-            <div class="search__empty" v-if="false">
-              <img src="../../assets/images/empty.png" alt="" />
-              <p>По вашим запросам ничего не найдено</p>
-            </div>
-            <div class="search__cards" v-if="cards">
+            <div
+              class="search__cards specialists__cards"
+              v-if="cards && cards.length > 0"
+            >
               <div class="search__card" v-for="(item, i) in cards" :key="i">
                 <div class="icon">
-                  <img v-if="item.logo" :src="item.logo" alt="" />
+                  <img
+                    v-if="item.profile_image"
+                    :src="item.profile_image"
+                    alt=""
+                  />
                 </div>
                 <div class="content">
-                  <h3 v-if="item.startup_name">{{ item.startup_name }}</h3>
-                  <p v-if="item.description">
-                    {{ item.description }}
-                  </p>
+                  <h3 v-if="item.name">{{ item.name }}</h3>
                   <div class="category" v-if="item.technologies">
-                    <span v-for="(technology, n) in item.technologies" :key="n">
+                    <span
+                      v-for="(technology, n) in item.technologies.slice(0, 3)"
+                      :key="n"
+                    >
                       {{ technology }}
                     </span>
+                    <span
+                      class="transparent"
+                      v-if="item.technologies.length > 3"
+                      >+{{ item.technologies.length - 3 }}</span
+                    >
                   </div>
                   <button @click="detailPage(item.id)">
                     Подробнее
@@ -55,6 +91,10 @@
                 </div>
               </div>
               <RegistrationBanner v-if="!store.state.auth.user" />
+            </div>
+            <div class="search__empty" v-else>
+              <img src="../../assets/images/empty.png" alt="" />
+              <p>По вашим запросам ничего не найдено</p>
             </div>
           </div>
         </div>
@@ -79,20 +119,44 @@ export default {
     const router = useRouter();
     const store = useStore();
     const isLoading = ref(true);
-
     const cards = computed(() => store.state.search.specialists);
+    const filters = computed(() => store.state.search.filters);
+    const selectedFilters = ref({});
 
-    const InitData = () => {
-      store.dispatch("search/getSpecialists").then((res) => {
+    const InitData = (event) => {
+      store.dispatch("search/getSpecialists", event).then((res) => {
         isLoading.value = false;
       });
     };
 
-    const detailPage = (id) => {
-      router.push("/corporations/" + id);
+    const GetFilters = async () => {
+      await store.dispatch("search/getFilters").then((res) => {
+        console.log(res);
+      });
     };
 
-    onMounted(() => {
+    const detailPage = (id) => {
+      router.push("/specialists/" + id);
+    };
+
+    const updateSelectedFilters = (filterId, filterCategory) => {
+      if (!selectedFilters.value[filterCategory]) {
+        selectedFilters.value[filterCategory] = [];
+      }
+
+      const index = selectedFilters.value[filterCategory].indexOf(filterId);
+      if (index > -1) {
+        selectedFilters.value[filterCategory].splice(index, 1);
+      } else {
+        selectedFilters.value[filterCategory].push(filterId);
+      }
+
+      console.log(selectedFilters.value);
+      InitData(selectedFilters.value);
+    };
+
+    onMounted(async () => {
+      await GetFilters();
       InitData();
     });
 
@@ -102,6 +166,9 @@ export default {
       cards,
       isLoading,
       detailPage,
+      filters,
+      selectedFilters,
+      updateSelectedFilters,
     };
   },
 };

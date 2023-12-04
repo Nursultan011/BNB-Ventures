@@ -97,7 +97,8 @@
             class="text-field"
             :class="{
               'has-error':
-                validation.password_repeat && validation.password_repeat !== true,
+                validation.password_repeat &&
+                validation.password_repeat !== true,
             }"
           >
             <label for="password_repeat">Повторите пароль</label>
@@ -111,7 +112,10 @@
               @input="validate('password_repeat')"
             />
             <span
-              v-if="validation.password_repeat && validation.password_repeat !== true"
+              v-if="
+                validation.password_repeat &&
+                validation.password_repeat !== true
+              "
               class="error-message"
               >{{ validation.password_repeat }}</span
             >
@@ -120,11 +124,18 @@
             <input v-model="form.accepted" type="checkbox" />
             <p>
               Подтверждаю, что я ознакомился(ась) с
-              <a href="">Пользовательским соглашением и обработкой персональных данных</a>
+              <a href=""
+                >Пользовательским соглашением и обработкой персональных
+                данных</a
+              >
             </p>
           </div>
           <div v-if="hasErrors" class="error-message">
-            <div class="haserror" v-for="(errors, field) in errorMessages" :key="field">
+            <div
+              class="haserror"
+              v-for="(errors, field) in errorMessages"
+              :key="field"
+            >
               {{ field }}: {{ errors.join(", ") }}
             </div>
           </div>
@@ -144,8 +155,8 @@
         <form class="auth__form">
           <div class="description">
             Мы отправили на почту
-            <span v-if="form.email">{{ form.email }}</span> сообщение 6-ти значным кодом,
-            введите его.
+            <span v-if="form.email">{{ form.email }}</span> сообщение 6-ти
+            значным кодом, введите его.
           </div>
           <div class="otp-input">
             <input
@@ -159,10 +170,16 @@
             />
           </div>
           <div class="otp-repeat">
-            <span v-if="timer > 0"> Отправить новый код через {{ timer }} сек </span>
+            <span v-if="timer > 0">
+              Отправить новый код через {{ timer }} сек
+            </span>
             <span v-else>Отправить заново</span>
           </div>
-          <button @click.prevent="confirmEmail" class="main-button" type="submit">
+          <button
+            @click.prevent="confirmEmail"
+            class="main-button"
+            type="submit"
+          >
             Подтвердить
           </button>
         </form>
@@ -172,7 +189,7 @@
 </template>
 
 <script>
-import { ref, watch, computed, nextTick, onMounted } from "vue";
+import { ref, watch, computed, nextTick, onMounted, toRaw } from "vue";
 import { useStore } from "vuex";
 import { maska } from "maska";
 import { useRoute } from "vue-router";
@@ -186,13 +203,28 @@ export default {
 
     const steps = ref(0);
 
-    const roles = {
-      startup: "StartUp",
-      investor: "Investor",
-      "invest-fund": "InvestFund",
-      сorporation: "Corporation",
-      specialist: "Specialist",
-    };
+    const roles = ref([
+      {
+        path: "startup",
+        value: "StartUp",
+      },
+      {
+        path: "investor",
+        value: "Investor",
+      },
+      {
+        path: "invest-fund",
+        value: "InvestFund",
+      },
+      {
+        path: "сorporation",
+        value: "Corporation",
+      },
+      {
+        path: "specialist",
+        value: "Specialist",
+      },
+    ]);
 
     const form = ref({
       name: "",
@@ -228,7 +260,8 @@ export default {
       },
     });
 
-    const validateRequired = (value) => !!value || "Поле обязательно для заполнения";
+    const validateRequired = (value) =>
+      !!value || "Поле обязательно для заполнения";
     const validateEmail = (value) =>
       /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value) || "Введите корректный email";
     const validatePhone = (value) =>
@@ -240,7 +273,9 @@ export default {
       validation.value.email = validateEmail(form.value.email);
       validation.value.phone = validateRequired(form.value.phone);
       validation.value.password = validateRequired(form.value.password);
-      validation.value.password_repeat = validateRequired(form.value.password_repeat);
+      validation.value.password_repeat = validateRequired(
+        form.value.password_repeat
+      );
 
       if (form.value.password !== form.value.password_repeat) {
         validation.value.password_repeat = "Пароли не совпадают";
@@ -274,7 +309,20 @@ export default {
       }
     };
 
+    const type = (type) => {
+      const selectType = roles.value.find((item) => item.path == type);
+
+      console.log(selectType);
+
+      // roles.value.forEach((item) => {
+      //   if (item.path == type) {
+      //     console.log(item.value);
+      //   }
+      // });
+    };
+
     const submit = () => {
+      console.log(type(route.params.type));
       validateForm();
 
       if (
@@ -289,7 +337,7 @@ export default {
             email: form.value.email,
             phone: form.value.phone,
             password: form.value.password,
-            type: roles[route.params.type] ?? "None",
+            type: type(route.params.type),
           })
           .then((res) => {
             console.log(res, "43434334");
@@ -326,7 +374,9 @@ export default {
       }
     };
 
-    const hasErrors = computed(() => Object.keys(errorMessages.value).length > 0);
+    const hasErrors = computed(
+      () => Object.keys(errorMessages.value).length > 0
+    );
 
     const startTimer = () => {
       timerInterval.value = setInterval(() => {

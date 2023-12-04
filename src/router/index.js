@@ -24,6 +24,11 @@ const routes = [
     component: () => import('../pages/corporations/index.vue'),
   },
   {
+    path: '/corporations/:id',
+    name: 'corporation',
+    component: () => import('../pages/corporations/id.vue'),
+  },
+  {
     path: '/investors',
     name: 'investors',
     component: () => import('../pages/investors/index.vue'),
@@ -32,6 +37,11 @@ const routes = [
     path: '/specialists',
     name: 'specialists',
     component: () => import('../pages/specialists/index.vue'),
+  },
+  {
+    path: '/specialists/:id',
+    name: 'specialist',
+    component: () => import('../pages/specialists/id.vue'),
   },
   {
     path: '/login',

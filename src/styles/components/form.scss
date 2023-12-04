@@ -1,5 +1,41 @@
 .form-page{
   background: #FAFAFA;
+  .title{
+    font-size: 32px;
+    font-weight: 600;
+  }
+  &__wrapper{
+    margin-top: 24px;
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+  }
+  .form-page__check{
+    background-color: #228B6B;
+    padding: 24px;
+    display: flex;
+    gap: 16px;
+    svg{
+      width: 34px ;
+      height: 34px;
+    }
+    .form__text-box{
+      color: #fff;
+      p{
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 500;
+        margin: 0;
+      }
+      span{
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 20px;
+        margin-top: 8px;
+      }
+    }
+  }
   &__inner{
     padding: 24px 0 86px 0;
   }
@@ -7,12 +43,15 @@
     max-width: 819px;
     width: 100%;
     background: white;
-    margin-top: 24px;
+    
     padding: 24px;
   }
   &__header{
     display: flex;
     align-items: flex-start;
+    .edit-icon{
+      margin-left: auto;
+    }
     .logo{
       width: 80px;
       height: 80px;
@@ -45,18 +84,55 @@
   }
   &__card{
     &-title{
-      font-size: 20px;
-      line-height: 140%;
-      font-weight: 500;
-      color: $black-color;
+      h4{
+        font-size: 20px;
+        line-height: 140%;
+        font-weight: 500;
+        color: $black-color;
+        margin: 0;
+      }
+      display: flex;
+      align-items:center;
+      justify-content: space-between;
       margin: 0 0 24px 0;
     }
     &-category{
       display: flex;
       flex-wrap: wrap;
       gap: 24px;
+      .fulls{
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        grid-row-gap: 24px;
+      }
       .full{
         width: 100%;
+      }
+      .full-item{
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        .item-content{
+          display: flex;
+          align-items:center;
+          gap: 16px;
+          img{
+            width: 48px;
+            height: 48px;
+          }
+          .item-text{
+            p{
+              margin: 0;
+            }
+            .item-date{
+              color:#767A87;
+              font-size: 14px;
+              font-weight: 400;
+              margin-top: 8px;
+            }
+          }
+        }
       }
       div{
         width: max-content;
@@ -68,6 +144,7 @@
           margin-bottom: 6px;
         }
         &>span{
+          display: flex;
           .item{
             display: flex;
             flex-wrap: wrap;

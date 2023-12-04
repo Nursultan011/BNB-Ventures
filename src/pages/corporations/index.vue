@@ -9,24 +9,46 @@
           <li class="breadcrumb-item active" aria-current="page">Корпорации</li>
         </Breadcrumb>
         <p class="title">Корпорации</p>
-        <div class="description" v-if="cards">Всего {{ cards.length }} корпорации</div>
+        <div class="description" v-if="cards">
+          Всего {{ cards.length }} корпорации
+        </div>
         <div class="search__wrap">
-          <div class="filters">Фильтр</div>
+          <div class="filters">
+            <p class="filters__title">Фильтр</p>
+            <div class="filters__items" v-if="filters && filters.industries">
+              <p>Индустрии</p>
+              <div v-for="(flt, i) in filters.industries" :key="i">
+                <input
+                  type="checkbox"
+                  :value="flt.id"
+                  @change="updateSelectedFilters(flt.id, 'industries')"
+                />
+                <span>{{ flt.name }}</span>
+              </div>
+            </div>
+            <div class="filters__items" v-if="filters && filters.technologies">
+              <p>Технологии</p>
+              <div v-for="(flt, i) in filters.technologies" :key="i">
+                <input
+                  type="checkbox"
+                  :value="flt.id"
+                  @change="updateSelectedFilters(flt.id, 'technologies')"
+                />
+                <span>{{ flt.name }}</span>
+              </div>
+            </div>
+          </div>
           <div class="search__content">
             <div class="search__input">
               <input type="text" placeholder="Поиск" />
             </div>
-            <div class="search__empty" v-if="false">
-              <img src="../../assets/images/empty.png" alt="" />
-              <p>По вашим запросам ничего не найдено</p>
-            </div>
-            <div class="search__cards" v-if="cards">
+            <div class="search__cards" v-if="cards && cards.length > 0">
               <div class="search__card" v-for="(item, i) in cards" :key="i">
                 <div class="icon">
                   <img v-if="item.logo" :src="item.logo" alt="" />
                 </div>
                 <div class="content">
-                  <h3 v-if="item.startup_name">{{ item.startup_name }}</h3>
+                  <h3 v-if="item.public_name">{{ item.public_name }}</h3>
                   <p v-if="item.description">
                     {{ item.description }}
                   </p>
@@ -56,6 +78,10 @@
               </div>
               <RegistrationBanner v-if="!store.state.auth.user" />
             </div>
+            <div class="search__empty" v-else>
+              <img src="../../assets/images/empty.png" alt="" />
+              <p>По вашим запросам ничего не найдено</p>
+            </div>
           </div>
         </div>
       </div>
@@ -79,12 +105,19 @@ export default {
     const router = useRouter();
     const store = useStore();
     const isLoading = ref(true);
-
     const cards = computed(() => store.state.search.corporations);
+    const filters = computed(() => store.state.search.filters);
+    const selectedFilters = ref({});
 
-    const InitData = () => {
-      store.dispatch("search/getCorporations").then((res) => {
+    const InitData = (event) => {
+      store.dispatch("search/getCorporations", event).then((res) => {
         isLoading.value = false;
+      });
+    };
+
+    const GetFilters = async () => {
+      await store.dispatch("search/getFilters").then((res) => {
+        console.log(res);
       });
     };
 
@@ -92,7 +125,24 @@ export default {
       router.push("/corporations/" + id);
     };
 
-    onMounted(() => {
+    const updateSelectedFilters = (filterId, filterCategory) => {
+      if (!selectedFilters.value[filterCategory]) {
+        selectedFilters.value[filterCategory] = [];
+      }
+
+      const index = selectedFilters.value[filterCategory].indexOf(filterId);
+      if (index > -1) {
+        selectedFilters.value[filterCategory].splice(index, 1);
+      } else {
+        selectedFilters.value[filterCategory].push(filterId);
+      }
+
+      console.log(selectedFilters.value);
+      InitData(selectedFilters.value);
+    };
+
+    onMounted(async () => {
+      await GetFilters();
       InitData();
     });
 
@@ -102,6 +152,9 @@ export default {
       cards,
       isLoading,
       detailPage,
+      filters,
+      selectedFilters,
+      updateSelectedFilters,
     };
   },
 };

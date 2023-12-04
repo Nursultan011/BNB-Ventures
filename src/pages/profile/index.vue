@@ -39,15 +39,15 @@
           <div class="profile__info">
             <div>
               <span> Имя и фамилия </span>
-              <p>Айнур Абылай</p>
+              <p v-if="profile && profile.name">{{ profile.name }}</p>
             </div>
             <div>
               <span> Номер телефона </span>
-              <p>+7 (777) 123-45-67</p>
+              <p v-if="profile && profile.phone">{{ profile.phone }}</p>
             </div>
             <div>
               <span> Электронная почта </span>
-              <p>ainurabylai@gmail.com</p>
+              <p v-if="profile && profile.email">{{ profile.email }}</p>
             </div>
           </div>
         </div>
@@ -80,7 +80,7 @@
 
 <script>
 import Breadcrumb from "@/components/UIKit/Breadcrumb.vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
 
@@ -91,14 +91,15 @@ export default {
   setup() {
     const router = useRouter();
     const store = useStore();
+    const profile = computed(() => store.state.profile.profile);
     const isLoading = ref(true);
 
     onMounted(async () => {
       await getProfile();
     });
 
-    const getProfile = async (event) => {
-      await store.dispatch("profile/getProfile", event).then((res) => {
+    const getProfile = async () => {
+      await store.dispatch("profile/getProfile").then((res) => {
         isLoading.value = false;
       });
     };
@@ -112,6 +113,7 @@ export default {
       router,
       isLoading,
       redirect,
+      profile,
       getProfile,
     };
   },

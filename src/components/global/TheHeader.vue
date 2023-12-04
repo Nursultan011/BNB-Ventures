@@ -22,7 +22,7 @@
         </nav>
         <div class="header__wrap">
           <div class="language">
-            <div class="selected">
+            <div class="selected" @click="selectLang = !selectLang">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -81,9 +81,106 @@
                 />
               </svg>
             </div>
+            <div class="langs" v-if="selectLang">
+              <div class="langs-item">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="18"
+                  viewBox="0 0 24 18"
+                  fill="none"
+                >
+                  <rect y="0.5" width="24" height="17" fill="white" />
+                  <mask
+                    id="mask0_633_346"
+                    style="mask-type: luminance"
+                    maskUnits="userSpaceOnUse"
+                    x="0"
+                    y="0"
+                    width="24"
+                    height="18"
+                  >
+                    <rect
+                      x="0.25"
+                      y="0.75"
+                      width="23.5"
+                      height="16.5"
+                      fill="white"
+                      stroke="white"
+                      stroke-width="0.5"
+                    />
+                  </mask>
+                  <g mask="url(#mask0_633_346)">
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M0 11.8337H24V6.16699H0V11.8337Z"
+                      fill="#0C47B7"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M0 17.4997H24V11.833H0V17.4997Z"
+                      fill="#E53B35"
+                    />
+                  </g>
+                </svg>
+                Рус
+              </div>
+              <div class="langs-item">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="18"
+                  viewBox="0 0 24 18"
+                  fill="none"
+                >
+                  <rect y="0.5" width="24" height="17" fill="white" />
+                  <mask
+                    id="mask0_633_346"
+                    style="mask-type: luminance"
+                    maskUnits="userSpaceOnUse"
+                    x="0"
+                    y="0"
+                    width="24"
+                    height="18"
+                  >
+                    <rect
+                      x="0.25"
+                      y="0.75"
+                      width="23.5"
+                      height="16.5"
+                      fill="white"
+                      stroke="white"
+                      stroke-width="0.5"
+                    />
+                  </mask>
+                  <g mask="url(#mask0_633_346)">
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M0 11.8337H24V6.16699H0V11.8337Z"
+                      fill="#0C47B7"
+                    />
+                    <path
+                      fill-rule="evenodd"
+                      clip-rule="evenodd"
+                      d="M0 17.4997H24V11.833H0V17.4997Z"
+                      fill="#E53B35"
+                    />
+                  </g>
+                </svg>
+                Рус
+              </div>
+            </div>
           </div>
           <div class="header__account" v-if="user">
-            <div class="selected" ref="menuRef" @click="toggleMenu()" v-if="user.user">
+            <div
+              class="selected"
+              ref="menuRef"
+              @click="toggleMenu()"
+              v-if="user.user"
+            >
               {{ user.user.email }}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +215,9 @@
             </div>
           </div>
           <div class="header__actions" v-else>
-            <BorderButton @click="redirect('/registration')">Регистрация</BorderButton>
+            <BorderButton @click="redirect('/registration')"
+              >Регистрация</BorderButton
+            >
             <Button @click="redirect('/login')">Войти</Button>
           </div>
         </div>
@@ -148,6 +247,8 @@ export default {
 
     const isMenuOpen = ref(false);
     const menuRef = ref(null);
+
+    const selectLang = ref(false);
 
     const navList = ref([
       {
@@ -248,6 +349,7 @@ export default {
       menuSettings,
       isMenuOpen,
       toggleMenu,
+      selectLang,
     };
   },
 };

@@ -253,3 +253,46 @@
 		}
 	}
 }
+
+.questionnaire{
+	max-width: 600px;
+	width: 100%;
+	&>h3{
+		margin: 0;
+		font-size: 20px;
+		font-weight: 500;
+		margin-bottom: 24px;
+		color: $black-color;
+	}
+	.text-field{
+		margin-bottom: 24px;
+		select{
+			appearance: none;
+			-webkit-appearance: none;
+			background-image: url('@/assets/images/select-arrow.svg');
+			background-repeat: no-repeat;
+			background-size: 24px 24px;
+			background-position: calc(100% - 16px) center;
+		}
+		textarea{
+			padding: 20px 16px;
+		}
+		.input-img{
+			border: 1px dashed var(--BnB_Grey-500, #767A87);
+			background: #FFF;
+			height: 56px;
+			text-align: center;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			margin-bottom: 8px;
+		}
+	}
+	&__title{
+		color: $black-color;
+		font-weight: 500;
+		font-size: 32px;
+		text-align: center;
+		margin-bottom: 32px;
+	}
+}

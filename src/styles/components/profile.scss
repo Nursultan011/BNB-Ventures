@@ -23,6 +23,12 @@
         margin-top: 24px;
       }
     }
+    .error{
+      color: $error;
+      margin-top: 16px;
+      font-size: 14px;
+      font-weight: 400;
+    }
   }
   &__actions{
     max-width: 503px;

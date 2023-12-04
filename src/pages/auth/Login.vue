@@ -6,11 +6,22 @@
         <form @submit.prevent="submit" class="auth__form">
           <div class="text-field">
             <label for="">Электронная почта</label>
-            <input v-model="form.email" type="text" placeholder="name@example.com" />
+            <input
+              v-model="form.email"
+              type="text"
+              placeholder="name@example.com"
+            />
           </div>
           <div class="text-field">
             <label for="">Пароль</label>
-            <input v-model="form.password" type="password" placeholder="Введите пароль" />
+            <input
+              v-model="form.password"
+              type="password"
+              placeholder="Введите пароль"
+            />
+            <span v-if="errorDescription" class="error-message">
+              {{ errorDescription }}
+            </span>
           </div>
           <div class="auth__setting">
             <div class="remember">
@@ -44,6 +55,7 @@ export default {
   setup() {
     const router = useRouter();
     const store = useStore();
+    const errorDescription = ref();
 
     const form = ref({
       email: "",
@@ -59,8 +71,14 @@ export default {
         .then((res) => {
           console.log(res);
 
-          if (res.token) {
+          if (res && res.token) {
             router.push({ path: "/" });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          if (err && err.data && err.data.detail) {
+            errorDescription.value = err.data.detail;
           }
         });
     };
@@ -70,6 +88,7 @@ export default {
       store,
       form,
       submit,
+      errorDescription,
     };
   },
 };
