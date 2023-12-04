@@ -126,6 +126,9 @@
 	&__wrap {
 		display: flex;
 		align-items: center;
+    .menu-icon{
+      display: none;
+    }
 	}
 	&__actions {
 		display: flex;

@@ -35,7 +35,7 @@
             Нет аккаунта?
             <router-link to="/registration">Зарегистрироваться</router-link>
           </div>
-          <div class="or">Или</div>
+          <!-- <div class="or">Или</div> -->
         </form>
       </div>
     </div>
