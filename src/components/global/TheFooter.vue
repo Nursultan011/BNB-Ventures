@@ -9,11 +9,14 @@
           </div>
           <nav>
             <ul>
-              <li class="">Стартапы</li>
-              <li class="">Корпорации</li>
-              <li class="">Инвесторы</li>
-              <li class="">Специалисты</li>
-              <li class="">Новости</li>
+              <li
+                :class="route.path == item.path ? 'active' : ''"
+                @click="redirect(item.path)"
+                v-for="(item, i) in links"
+                :key="i"
+              >
+                {{ item.name }}
+              </li>
             </ul>
           </nav>
           <div class="footer__socials">
@@ -74,7 +77,48 @@
 </template>
 
 <script>
-export default {};
+import { ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+export default {
+  setup() {
+    const router = useRouter();
+    const route = useRoute();
+
+    const links = ref([
+      {
+        name: "Стартап",
+        path: "/startups",
+      },
+      {
+        name: "Корпорации",
+        path: "/corporations",
+      },
+      {
+        name: "Инвесторы",
+        path: "/investors",
+      },
+      {
+        name: "Специалисты",
+        path: "/specialists",
+      },
+      {
+        name: "Новости",
+        path: "/articles",
+      },
+    ]);
+
+    const redirect = async (event) => {
+      await router.push({ path: event });
+    };
+
+    return {
+      links,
+      router,
+      route,
+      redirect,
+    };
+  },
+};
 </script>
 
 <style></style>

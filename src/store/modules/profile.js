@@ -28,6 +28,24 @@ const actions = {
       // Обработка ошибок
     }
   },
+  async updateProfile({ commit, rootState }, body) {
+    try {
+      const user = rootState.auth.user;
+      const token = user.token;
+
+      const response = await axiosInstance.put(`/users/profile/`, body, {
+        headers: { Authorization: `Token ${token}` }
+      });
+
+      if (response.data) {
+        return response.data;
+      }
+    } catch (error) {
+      console.error('Ошибка:', error);
+      throw error;
+      // Обработка ошибок
+    }
+  },
   async updatePassword({ commit, rootState }, body) {
     try {
       const user = rootState.auth.user;
@@ -40,7 +58,6 @@ const actions = {
       if (response.data) {
         localStorage.removeItem("setUser");
         commit('setUser', null);
-
         return response.data;
       }
     } catch (error) {
@@ -54,20 +71,18 @@ const actions = {
       const rolesEndpoints = {
         "StartUp": "startups",
         "Investor": "investors",
-        "InvestFund": "invest-fund",
+        "InvestFund": "invest-funds",
         "Corporation": "corporations",
         "Specialist": "specialists"
       };
 
       const user = rootState.auth.user;
-      const userProfile = user.user.profile ?? null;
-      const token = user.token;
 
-      if (token && rolesEndpoints[userProfile]) {
-        const requestUrl = `profiles/users/${rolesEndpoints[userProfile]}/`;
+      if (user && user.token && rolesEndpoints[user.user.profile_type]) {
+        const requestUrl = `profiles/users/${rolesEndpoints[user.user.profile_type]}/`;
 
         const response = await axiosInstance.get(requestUrl, {
-          headers: { Authorization: `Token ${token}` }
+          headers: { Authorization: `Token ${user.token}` }
         });
 
         if (response.data && Array.isArray(response.data) && response.data.length >= 1) {
@@ -76,7 +91,8 @@ const actions = {
         }
       }
     } catch (error) {
-      console.error('Ошибка:', error);
+      console.log('Ошибка:', error);
+      throw error;
       // Обработка ошибок
     }
   },

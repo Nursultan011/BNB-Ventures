@@ -4,7 +4,8 @@ import axiosInstance from '../../helpers/instance';
 
 const state = {
   articles: null,
-  article: null
+  article: null,
+  articlesMain: null,
 };
 
 const getters = {
@@ -13,7 +14,7 @@ const getters = {
 const actions = {
   async getArticles({ commit }) {
     try {
-      const response = await axiosInstance.get(`/articles/articles/`);
+      const response = await axiosInstance.get('/articles/articles/');
 
       if (response.data) {
         commit('setArticles', response.data);
@@ -23,7 +24,26 @@ const actions = {
       return response.data;
     } catch (error) {
       console.error('Ошибка:', error);
-      // Обработка ошибок
+      throw error;
+    }
+  },
+  async getArticlesMain({ commit }, event = null) {
+    try {
+      let url = `/articles/articles/`;
+
+      if (event) {
+        url += event;
+      }
+
+      const response = await axiosInstance.get(url);
+
+      if (response && response.data && response.data.results) {
+        commit('setArticlesMain', response.data.results);
+        return response.data.results;
+      }
+    } catch (error) {
+      console.error('Ошибка:', error);
+      throw error;
     }
   },
   async getArticle({ commit }, id) {
@@ -40,6 +60,7 @@ const actions = {
       }
     } catch (error) {
       console.error('Ошибка:', error);
+      throw error;
     }
   }
 };
@@ -50,6 +71,9 @@ const mutations = {
   },
   setArticle(state, data) {
     state.article = data;
+  },
+  setArticlesMain(state, data) {
+    state.articlesMain = data;
   }
 };
 

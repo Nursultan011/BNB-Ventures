@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from '../store';
 
 const roles = ['startup', 'corporation', 'investor', 'specialist'];
 
@@ -7,6 +8,15 @@ const routes = [
     path: '/',
     name: 'main',
     component: () => import('../pages/main/index.vue'),
+    beforeEnter: (to, from, next) => {
+      const isAuthenticated = !!store.state.auth.user && !!store.state.auth.user.token;
+
+      if (isAuthenticated) {
+        next({ path: '/form' });
+      } else {
+        next();
+      }
+    },
   },
   {
     path: '/startups',
@@ -116,7 +126,10 @@ const localUser = localStorage.getItem("setUser")
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    return { top: 0 };
+  },
 })
 
 router.beforeEach((to, from, next) => {

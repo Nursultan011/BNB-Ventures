@@ -19,9 +19,13 @@
           color: $white;
           font-weight: 400;
           line-height: 20px;
+          transition: 0.25s;
           cursor: pointer;
           & + li{
             margin-left: 32px;
+          }
+          &:hover{
+            color: #37ce9f;
           }
         }
       }

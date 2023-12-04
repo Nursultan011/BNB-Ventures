@@ -61,7 +61,11 @@
           <router-link to="/profile" class="main-button button-text"
             >Отменить</router-link
           >
-          <button class="main-button" @click.prevent="submit()">
+          <button
+            class="main-button"
+            @click.prevent="submit()"
+            :disabled="!isFormValid"
+          >
             Изменить пароль
           </button>
         </div>
@@ -72,7 +76,7 @@
 
 <script>
 import Breadcrumb from "@/components/UIKit/Breadcrumb.vue";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 
 export default {
@@ -90,20 +94,33 @@ export default {
 
     const error = ref();
 
+    const isFormValid = computed(() => {
+      return (
+        form.value.current_password &&
+        form.value.new_password &&
+        form.value.confirm_new_password &&
+        form.value.new_password === form.value.confirm_new_password
+      );
+    });
+
     const submit = () => {
-      store
-        .dispatch("profile/updatePassword", form.value)
-        .then((res) => {
-          console.log(res);
-          if (res.detail) {
-            error.value = res.detail;
-          }
-        })
-        .catch((err) => {
-          if (err) {
-            console.log(err);
-          }
-        });
+      if (isFormValid.value) {
+        store
+          .dispatch("profile/updatePassword", form.value)
+          .then((res) => {
+            if (res.detail) {
+              router.push("/");
+            }
+          })
+          .catch((err) => {
+            if (err && err.data && err.data.detail) {
+              error.value = err.data.detail;
+            }
+          });
+      } else {
+        error.value =
+          "Пожалуйста, проверьте, что все поля заполнены и пароли совпадают.";
+      }
     };
 
     return {
@@ -111,6 +128,7 @@ export default {
       store,
       error,
       submit,
+      isFormValid,
     };
   },
 };

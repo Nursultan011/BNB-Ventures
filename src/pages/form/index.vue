@@ -2,585 +2,31 @@
   <Loader v-if="loading" />
   <section v-else class="form-page">
     <div class="container">
-      <div class="form-page__inner" v-if="steps === 1">
-        <div v-if="role.user.profile_type == roles[0]">
-          <p class="questionnaire__title">Анкета стартапа</p>
-          <form class="questionnaire auth__form">
-            <div class="text-field">
-              <label for="">Публичное название</label>
-              <input type="text" placeholder="Например, BnB Ventures" />
-            </div>
-
-            <div class="text-field">
-              <label for="">Сайт</label>
-              <input type="text" placeholder="https://" />
-              <p>Будет виден другим участникам</p>
-            </div>
-            <div class="text-field">
-              <label for="">Имя и фамилия контактного лица</label>
-              <input type="text" placeholder="Иван Иванов" />
-            </div>
-            <div class="text-field">
-              <label for="">Публичная электронная почта</label>
-              <input type="text" placeholder="name@example.kz" />
-            </div>
-            <div class="text-field">
-              <label for="">Номер телефона</label>
-              <input type="text" placeholder="+7 (777) 123 45 67" />
-              <p>Будет виден другим участникам</p>
-            </div>
-            <div class="text-field">
-              <label for="">Наименование организации</label>
-              <input type="text" placeholder="Например, ООО “Компания”" />
-            </div>
-            <div class="text-field">
-              <label for="">Идентификационный номер</label>
-              <input type="text" placeholder="Укажите номер" />
-            </div>
-            <div class="text-field">
-              <label for="">Год основания</label>
-              <input type="text" placeholder="Укажите год" />
-            </div>
-            <div class="text-field">
-              <label for="">Страна регистрации</label>
-              <select>
-                <option value="">Выберите страну</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Количество сотрудников</label>
-              <input type="text" placeholder="Укажите количество сотрудников" />
-            </div>
-            <div class="text-field">
-              <label for="">Описание</label>
-              <textarea
-                name=""
-                id=""
-                cols="30"
-                rows="10"
-                placeholder="Расскажите о вашем продукте"
-              ></textarea>
-              <p>0 / 500</p>
-            </div>
-            <div class="text-field">
-              <label for="">Стадия развития стартапа</label>
-              <select>
-                <option value="">Выберите стадию развития</option>
-                <option value="">Прототип, продаж нет</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Стадия инвестирования</label>
-              <select>
-                <option value="">Выберите стадию инвестирования</option>
-                <option value="">Ранний рост</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Индустрии вашего стартапа</label>
-              <select>
-                <option value="">Выберите индустрии</option>
-                <option value="">Ранний рост</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Технологии вашего стартапа</label>
-              <select>
-                <option value="">Выберите технологии</option>
-                <option value="">Ранний рост</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Бизнес-модели</label>
-              <select>
-                <option value="">Выберите бизнес-модели</option>
-                <option value="">Ранний рост</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Модели продаж</label>
-              <select>
-                <option value="">Выберите модели</option>
-                <option value="">Ранний рост</option>
-              </select>
-              <p>Укажите модели взаимодействия с клиентами в вашем бизнесе</p>
-            </div>
-            <div class="text-field">
-              <label for="">Рынки, на которых вы работаете</label>
-              <select>
-                <option value="">Выберите страны</option>
-                <option value="">Ранний рост</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Есть продажи?</label>
-              <input type="checkbox" />
-              Да
-              <input type="checkbox" />
-              Нет
-            </div>
-            <div class="text-field">
-              <label for=""
-                >Есть успешные пилоты и/или внедрения в корпорации?</label
-              >
-              <input type="checkbox" />
-              Да
-              <input type="checkbox" />
-              Нет
-            </div>
-            <div class="text-field">
-              <label for=""
-                >Находитесь ли вы в активном поиске инвестиций?</label
-              >
-              <input type="checkbox" />
-              Да
-              <input type="checkbox" />
-              Нет
-            </div>
-            <div class="text-field">
-              <label for="">Общий объем ранее привлеченных инвестиций</label>
-              <input type="text" placeholder="$" />
-            </div>
-            <div class="text-field">
-              <label for="">Список инвесторов</label>
-              <textarea
-                placeholder="Перечислите инвесторов, от которых получали инвестиции"
-              ></textarea>
-              <p>
-                Информация об инвесторах будет видна только пользователям с
-                ролью Инвестора
-              </p>
-            </div>
-            <div class="text-field">
-              <label for="">Логотип</label>
-              <input
-                type="text"
-                placeholder="Выберите файл или перетащите его"
-              />
-              <p>
-                Размер логотипа: до 1200х1200. Вес файла - не более 5 МБ, формат
-                png, jpg.
-              </p>
-            </div>
-            <div class="text-field">
-              <label for="">Презентация</label>
-              <input
-                type="text"
-                placeholder="Выберите файл или перетащите его"
-              />
-              <p>Вес файла - не более 20 МБ, формат pdf.</p>
-            </div>
-            <div class="text-field">
-              <label for="">Откуда вы узнали о BnB Ventures?</label>
-              <select>
-                <option value="">Выберите вариант ответа</option>
-                <option value="">Ранний рост</option>
-              </select>
-            </div>
-          </form>
-        </div>
-
-        <div v-else-if="role.user.profile_type == roles[1]">
-          <p class="questionnaire__title">Анкета инвестора бизнес-ангела</p>
-          <form class="questionnaire auth__form">
-            <h3>Основная информация</h3>
-            <div class="text-field">
-              <label for="">Имя и фамилия контактного лица</label>
-              <input type="text" placeholder="Иван Иванов" />
-            </div>
-            <div class="text-field">
-              <label for="">Публичная электронная почта</label>
-              <input type="text" placeholder="name@example.kz" />
-            </div>
-            <div class="text-field">
-              <label for="">Номер телефона</label>
-              <input type="text" placeholder="+7 (777) 123 45 67" />
-            </div>
-            <div class="text-field">
-              <label for="">Страна регистрации</label>
-              <select>
-                <option value="">Выберите страну</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Описание</label>
-              <textarea
-                name=""
-                id=""
-                cols="30"
-                rows="10"
-                placeholder="Расскажите о вашем продукте"
-              ></textarea>
-              <p>0 / 500</p>
-            </div>
-            <div class="text-field">
-              <label for="">Откуда вы узнали о BnB Ventures?</label>
-              <select>
-                <option value="">Выберите вариант ответа</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Фото для профиля</label>
-              <input
-                type="text"
-                placeholder="Выберите файл или перетащите его"
-                class="input-img"
-              />
-              <p>
-                Размер логотипа: до 1200х1200. Вес файла - не более 5 МБ, формат
-                png, jpg.
-              </p>
-            </div>
-          </form>
-          <form class="questionnaire auth__form">
-            <h3>Работа со стартапами</h3>
-            <div class="text-field">
-              <label for="">Размер инвестиционных средств</label>
-              <input type="text" placeholder="$" />
-            </div>
-            <div class="text-field">
-              <label for="">Методы работы с инновациями</label>
-              <select>
-                <option value="">Выберите методы</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Релевантные стадии развития стартапов</label>
-              <select>
-                <option value="">Выберите стадии</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Релевантные технологии стартапов</label>
-              <select>
-                <option value="">Выберите технологии</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Релевантные индустрии стартапов</label>
-              <select>
-                <option value="">Выберите индустрии</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for=""
-                >У вашей компании есть опыт пилотирования со стартапами?</label
-              >
-              <input type="checkbox" />
-              Да
-              <input type="checkbox" />
-              Нет
-            </div>
-            <div class="text-field">
-              <label for="">Инвестирует ли ваша компания в стартапы?</label>
-              <input type="checkbox" />
-              Да
-              <input type="checkbox" />
-              Нет
-            </div>
-          </form>
-        </div>
-
-        <div v-else-if="role.user.profile_type == roles[2]">
-          <p class="questionnaire__title">Анкета инвестиционного фонда</p>
-          <form class="questionnaire auth__form">
-            <h3>Основная информация</h3>
-            <div class="text-field">
-              <label for="">Имя и фамилия контактного лица</label>
-              <input type="text" placeholder="Иван Иванов" />
-            </div>
-            <div class="text-field">
-              <label for="">Публичная электронная почта</label>
-              <input type="text" placeholder="name@example.kz" />
-            </div>
-            <div class="text-field">
-              <label for="">Номер телефона</label>
-              <input type="text" placeholder="+7 (777) 123 45 67" />
-            </div>
-            <div class="text-field">
-              <label for="">Страна регистрации</label>
-              <select>
-                <option value="">Выберите страну</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Описание</label>
-              <textarea
-                name=""
-                id=""
-                cols="30"
-                rows="10"
-                placeholder="Расскажите о вашем продукте"
-              ></textarea>
-              <p>0 / 500</p>
-            </div>
-            <div class="text-field">
-              <label for="">Откуда вы узнали о BnB Ventures?</label>
-              <select>
-                <option value="">Выберите вариант ответа</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Фото для профиля</label>
-              <input
-                type="text"
-                placeholder="Выберите файл или перетащите его"
-              />
-              <p>
-                Размер логотипа: до 1200х1200. Вес файла - не более 5 МБ, формат
-                png, jpg.
-              </p>
-            </div>
-          </form>
-          <form class="questionnaire auth__form">
-            <h3>Работа со стартапами</h3>
-            <div class="text-field">
-              <label for="">Размер инвестиционных средств</label>
-              <input type="text" placeholder="$" />
-            </div>
-            <div class="text-field">
-              <label for="">Методы работы с инновациями</label>
-              <select>
-                <option value="">Выберите методы</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Релевантные стадии развития стартапов</label>
-              <select>
-                <option value="">Выберите стадии</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Релевантные технологии стартапов</label>
-              <select>
-                <option value="">Выберите технологии</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Релевантные индустрии стартапов</label>
-              <select>
-                <option value="">Выберите индустрии</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for=""
-                >У вашей компании есть опыт пилотирования со стартапами?</label
-              >
-              <input type="checkbox" />
-              Да
-              <input type="checkbox" />
-              Нет
-            </div>
-            <div class="text-field">
-              <label for="">Инвестирует ли ваша компания в стартапы?</label>
-              <input type="checkbox" />
-              Да
-              <input type="checkbox" />
-              Нет
-            </div>
-          </form>
-        </div>
-
-        <div v-else-if="role.user.profile_type == roles[3]">
-          <p class="questionnaire__title">Анкета корпорации</p>
-          <form class="questionnaire auth__form">
-            <h3>Основная информация</h3>
-            <div class="text-field">
-              <label for="">Публичное название</label>
-              <input type="text" placeholder="Например, BnB Ventures" />
-            </div>
-            <div class="text-field">
-              <label for="">Наименование организации</label>
-              <input type="text" placeholder="Например, ООО “Компания”" />
-            </div>
-            <div class="text-field">
-              <label for="">Публичная электронная почта</label>
-              <input type="text" placeholder="name@example.kz" />
-            </div>
-            <div class="text-field">
-              <label for="">Идентификационный номер</label>
-              <input type="text" placeholder="Укажите номер" />
-            </div>
-            <div class="text-field">
-              <label for="">Страна регистрации</label>
-              <select>
-                <option value="">Выберите страну</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Сайт</label>
-              <input type="text" placeholder="https://" />
-            </div>
-            <div class="text-field">
-              <label for="">Описание</label>
-              <textarea
-                name=""
-                id=""
-                cols="30"
-                rows="10"
-                placeholder="Расскажите о вашем продукте"
-              ></textarea>
-              <p>0 / 500</p>
-            </div>
-            <div class="text-field">
-              <label for="">Логотип</label>
-              <input
-                type="text"
-                placeholder="Выберите файл или перетащите его"
-              />
-              <p>
-                Размер логотипа: до 1200х1200. Вес файла - не более 5 МБ, формат
-                png, jpg.
-              </p>
-            </div>
-            <div class="text-field">
-              <label for="">Откуда вы узнали о BnB Ventures?</label>
-              <select>
-                <option value="">Выберите вариант ответа</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-          </form>
-          <form class="questionnaire auth__form">
-            <h3>Работа со стартапами</h3>
-            <div class="text-field">
-              <label for="">Методы работы с инновациями</label>
-              <select>
-                <option value="">Выберите методы</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Релевантные стадии развития стартапов</label>
-              <select>
-                <option value="">Выберите стадии</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Релевантные технологии стартапов</label>
-              <select>
-                <option value="">Выберите технологии</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Релевантные индустрии стартапов</label>
-              <select>
-                <option value="">Выберите индустрии</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for=""
-                >У вашей корпорации есть опыт пилотирования со
-                стартапами?</label
-              >
-              <input type="checkbox" />
-              Да
-              <input type="checkbox" />
-              Нет
-            </div>
-            <div class="text-field">
-              <label for="">Инвестирует ли ваша корпорация в стартапы?</label>
-              <input type="checkbox" />
-              Да
-              <input type="checkbox" />
-              Нет
-            </div>
-          </form>
-        </div>
-
-        <div v-else-if="role.user.profile_type == roles[4]">
-          <p class="questionnaire__title">Анкета специалиста</p>
-          <form class="questionnaire auth__form">
-            <h3>Основная информация</h3>
-            <div class="text-field">
-              <label for="">Описание</label>
-              <textarea
-                name=""
-                id=""
-                cols="30"
-                rows="10"
-                placeholder="Расскажите о вашем продукте"
-              ></textarea>
-              <p>0 / 1000</p>
-            </div>
-            <div class="text-field">
-              <label for="">Индустрии</label>
-              <select>
-                <option value="">Выберите индустрии</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Технологии</label>
-              <select>
-                <option value="">Выберите технологии</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Опыт работы</label>
-              <select>
-                <option value="">Выберите опыт работы</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-            <div class="text-field">
-              <label for="">Фото для профиля</label>
-              <input
-                type="text"
-                placeholder="Выберите файл или перетащите его"
-              />
-              <p>
-                Размер логотипа: до 1200х1200. Вес файла - не более 5 МБ, формат
-                png, jpg.
-              </p>
-            </div>
-            <div class="text-field">
-              <label for="">Резюме</label>
-              <input
-                type="text"
-                placeholder="Выберите файл или перетащите его"
-              />
-              <p>Вес файла - не более 20 МБ, формат pdf.</p>
-            </div>
-            <div class="text-field">
-              <label for="">Откуда вы узнали о BnB Ventures?</label>
-              <select>
-                <option value="">Выберите вариант ответа</option>
-                <option value="">Казахстан</option>
-              </select>
-            </div>
-          </form>
-        </div>
+      <div
+        class="form-page__inner"
+        v-if="role && role.user && role.user.profile_type && steps === 1"
+      >
+        <StartupForm v-if="role.user.profile_type == roles[0]" />
+        <InvestorForm v-else-if="role.user.profile_type == roles[1]" />
+        <InvestFundForm v-else-if="role.user.profile_type == roles[2]" />
+        <CorporationForm v-else-if="role.user.profile_type == roles[3]" />
+        <SpecialistForm v-else-if="role.user.profile_type == roles[4]" />
       </div>
-      <div class="form-page__inner" v-else-if="steps === 2">
+      <div class="form-page__inner" v-else-if="steps === 2 && form">
         <p class="title">Моя анкета</p>
         <div class="form-page__wrapper">
-          <div>
+          <div class="form-page__cards">
             <div class="form-page__card form-page__header">
               <div class="logo">
-                <img src="../../assets/images/member1.png" alt="" />
+                <img v-if="form && form.logo" :src="form.logo" alt="" />
               </div>
               <div class="info">
-                <p>SmartRemont</p>
-                <span> 0 просмотров </span>
+                <p v-if="form && form.contact_name">
+                  {{ form.contact_name }}
+                </p>
+                <span v-if="form && form.views">
+                  {{ form.views }} просмотров
+                </span>
                 <span>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -655,40 +101,48 @@
                 </svg>
               </div>
               <div class="form-page__card-category">
-                <div class="full">
+                <div class="full" v-if="form && form.description">
                   <label for="">Описание</label>
-                  <span> Прототип, продаж нет </span>
+                  <span> {{ form.description }} </span>
                 </div>
-                <div>
+                <div v-if="form && form.stage">
                   <label for="">Стадия развития</label>
-                  <span> Прототип, продаж нет </span>
+                  <span>
+                    <span v-for="(item, i) in form.stage" :key="i">
+                      {{ item
+                      }}<span
+                        style="margin-right: 6px"
+                        v-if="i < form.stage.length - 1"
+                        >,
+                      </span>
+                    </span>
+                  </span>
                 </div>
                 <div>
                   <label for="">Бизнес модели</label>
                   <span> B2B, B2C, C2C </span>
                 </div>
-                <div class="full">
+                <div class="full" v-if="form && form.industries">
                   <label for="">Индустрии</label>
                   <span>
-                    <div class="item">
-                      <span>AdTech & MarTech</span>
-                    </div>
-                    <div class="item">
-                      <span>Logistics & Supply Chain Tech</span>
-                    </div>
-                    <div class="item">
-                      <span>Analytics / Big Data</span>
-                    </div>
-                    <div class="item">
-                      <span>AR / VR</span>
+                    <div
+                      class="item"
+                      v-for="(idn, idx) in form.industries"
+                      :key="idx"
+                    >
+                      <span>{{ idn }}</span>
                     </div>
                   </span>
                 </div>
-                <div class="full">
+                <div class="full" v-if="form && form.technologies">
                   <label for="">Технологии</label>
                   <span>
-                    <div class="item">
-                      <span>AdTech & MarTech</span>
+                    <div
+                      class="item"
+                      v-for="(idn, idx) in form.technologies"
+                      :key="idx"
+                    >
+                      <span>{{ idn }}</span>
                     </div>
                   </span>
                 </div>
@@ -853,10 +307,20 @@
 import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
 import Loader from "@/components/global/Loader.vue";
+import InvestorForm from "@/components/partials/Form/InvestorForm.vue";
+import StartupForm from "@/components/partials/Form/StartupForm.vue";
+import InvestFundForm from "@/components/partials/Form/InvestFundForm.vue";
+import CorporationForm from "@/components/partials/Form/CorporationForm.vue";
+import SpecialistForm from "@/components/partials/Form/SpecialistForm.vue";
 
 export default {
   components: {
     Loader,
+    InvestorForm,
+    StartupForm,
+    InvestFundForm,
+    CorporationForm,
+    SpecialistForm,
   },
   setup() {
     const store = useStore();
@@ -874,23 +338,26 @@ export default {
 
     const role = computed(() => store.state.auth.user);
 
-    const getMe = () => {
-      console.log("32323");
-      store.dispatch("profile/getForm").then((res) => {
-        if (res) {
-          steps.value = 1;
-          loading.value = false;
-          console.log("32323");
-        } else {
-          steps.value = 1;
-          loading.value = false;
-          console.log("32323");
-        }
-      });
+    const getMe = async () => {
+      await store
+        .dispatch("profile/getForm")
+        .then((res) => {
+          console.log(res);
+          if (res) {
+            steps.value = 2;
+            loading.value = false;
+          } else {
+            steps.value = 1;
+            loading.value = false;
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
 
-    onMounted(() => {
-      getMe();
+    onMounted(async () => {
+      await getMe();
     });
 
     return {

@@ -9,10 +9,10 @@
             <span>возможности</span>
           </h1>
           <p>
-            Начните путь к инновационному будущему. Наша венчурная компания готова помочь
-            вам воплотить ваши мечты в реальность
+            Начните путь к инновационному будущему. Наша венчурная компания
+            готова помочь вам воплотить ваши мечты в реальность
           </p>
-          <Button>Присоединиться</Button>
+          <Button @click="redirect('/registration')">Присоединиться</Button>
         </div>
         <img src="../../assets/images/main-bg.png" alt="" />
       </div>
@@ -23,7 +23,7 @@
   <Opportunity />
   <Requirement />
   <Members />
-  <Articles />
+  <Articles :articles="articles" />
   <FAQ />
 </template>
 
@@ -39,6 +39,7 @@ import Requirement from "@/components/partials/MainPage/Requirement.vue";
 import { useRouter, useRoute } from "vue-router";
 import Opportunity from "@/components/partials/MainPage/Opportunity.vue";
 import Loader from "@/components/global/Loader.vue";
+import { useStore } from "vuex";
 
 export default {
   components: {
@@ -53,15 +54,22 @@ export default {
     Loader,
   },
   setup() {
+    const store = useStore();
     const router = useRouter();
     const route = useRoute();
     const isLoading = ref(true);
-
+    const articles = computed(() => store.state.articles.articlesMain);
     const roles = ref(["startup", "corporation", "investor", "specialist"]);
 
     const currentType = computed(() => route.params.type);
 
     onMounted(async () => {
+      await store
+        .dispatch("articles/getArticlesMain", "?page_size=4")
+        .then((res) => {
+          isLoading.value = false;
+        });
+
       if (roles.value.includes(currentType.value)) {
         localStorage.setItem("mainPageType", JSON.stringify(route.params.type));
       }
@@ -75,12 +83,19 @@ export default {
       }
     });
 
+    const redirect = (event) => {
+      router.push({ path: event });
+    };
+
     return {
+      store,
       router,
       route,
       roles,
       currentType,
       isLoading,
+      redirect,
+      articles,
     };
   },
 };

@@ -148,7 +148,7 @@
         </form>
       </div>
       <div class="auth__inner" v-else-if="steps === 1">
-        <div class="pending">Обрабатываем ваши данные...</div>
+        <Pending />
       </div>
       <div class="auth__inner" v-else-if="steps === 2">
         <h2 class="auth__title">Подтвердите аккаунт</h2>
@@ -177,8 +177,9 @@
           </div>
           <button
             @click.prevent="confirmEmail"
-            class="main-button"
+            class="main-button otp-button"
             type="submit"
+            :disabled="!isOtpComplete"
           >
             Подтвердить
           </button>
@@ -191,12 +192,13 @@
 <script>
 import { ref, watch, computed, nextTick, onMounted, toRaw } from "vue";
 import { useStore } from "vuex";
-import { maska } from "maska";
 import { useRoute } from "vue-router";
+import Pending from "@/components/partials/Auth/Pending.vue";
 
 export default {
-  components: {},
-  directives: { maska },
+  components: {
+    Pending,
+  },
   setup() {
     const route = useRoute();
     const store = useStore();
@@ -246,6 +248,10 @@ export default {
     const errorMessages = ref({});
     const otp = ref(["", "", "", "", "", ""]);
     const otpInputRefs = ref([]);
+
+    const isOtpComplete = computed(() => {
+      return otp.value.every((digit) => digit.trim() !== "");
+    });
 
     const timer = ref(60);
     const timerInterval = ref(null);
@@ -309,28 +315,18 @@ export default {
       }
     };
 
-    const type = (type) => {
-      const selectType = roles.value.find((item) => item.path == type);
-
-      console.log(selectType);
-
-      // roles.value.forEach((item) => {
-      //   if (item.path == type) {
-      //     console.log(item.value);
-      //   }
-      // });
+    const type = (typePath) => {
+      const selectedType = roles.value.find((item) => item.path === typePath);
+      return selectedType ? selectedType.value : "None";
     };
 
     const submit = () => {
-      console.log(type(route.params.type));
       validateForm();
 
       if (
         Object.values(validation.value).every((value) => value === true) &&
         form.value.accepted === true
       ) {
-        steps.value = 1;
-
         store
           .dispatch("auth/registration", {
             name: form.value.name,
@@ -340,6 +336,7 @@ export default {
             type: type(route.params.type),
           })
           .then((res) => {
+            steps.value = 1;
             console.log(res, "43434334");
 
             store
@@ -362,10 +359,8 @@ export default {
             if (err.response && err.response.data) {
               const errorData = err.response.data;
 
-              // Перебор ключей объекта ошибок
               for (const field in errorData) {
                 if (Object.hasOwnProperty.call(errorData, field)) {
-                  // Сохранение сообщений об ошибках для соответствующего поля
                   errorMessages.value[field] = errorData[field];
                 }
               }
@@ -432,6 +427,7 @@ export default {
       confirmEmail,
       handleKeyup,
       otpString,
+      isOtpComplete,
     };
   },
 };

@@ -1,5 +1,6 @@
 <template>
-  <section class="search">
+  <Loader v-if="isLoading" />
+  <section v-else class="search">
     <div class="container">
       <div class="search__inner">
         <Breadcrumb>
@@ -24,7 +25,9 @@
                   type="checkbox"
                   :value="flt.id"
                   @change="updateSelectedFilters(flt.id, 'industries')"
+                  id="checkbox-{{ i }}"
                 />
+                <div class="checkmark"></div>
                 <span>{{ flt.name }}</span>
               </div>
             </div>
@@ -35,7 +38,9 @@
                   type="checkbox"
                   :value="flt.id"
                   @change="updateSelectedFilters(flt.id, 'technologies')"
+                  id="checkbox-{{ i }}"
                 />
+                <div class="checkmark"></div>
                 <span>{{ flt.name }}</span>
               </div>
             </div>
@@ -104,6 +109,7 @@
 </template>
 
 <script>
+import Loader from "@/components/global/Loader.vue";
 import Breadcrumb from "@/components/UIKit/Breadcrumb.vue";
 import { computed, onMounted, ref } from "vue";
 import { useStore } from "vuex";
@@ -112,6 +118,7 @@ import RegistrationBanner from "@/components/global/RegistrationBanner.vue";
 
 export default {
   components: {
+    Loader,
     Breadcrumb,
     RegistrationBanner,
   },

@@ -59,7 +59,8 @@ export default {
           },
           {
             title: "Наличие MVP или готового продукта",
-            description: "Проекты на стадии прототипа и идеи временно не публикуются",
+            description:
+              "Проекты на стадии прототипа и идеи временно не публикуются",
           },
         ],
       },
@@ -69,7 +70,7 @@ export default {
         title: "Какие требования для корпорации?",
         info: [
           {
-            title: "Технологический уклон в инновации",
+            title: "1Технологический уклон в инновации",
             description: "Обязательно наличие инновационной технологии",
           },
           {
@@ -82,7 +83,8 @@ export default {
           },
           {
             title: "Наличие MVP или готового продукта",
-            description: "Проекты на стадии прототипа и идеи временно не публикуются",
+            description:
+              "Проекты на стадии прототипа и идеи временно не публикуются",
           },
         ],
       },
@@ -105,7 +107,8 @@ export default {
           },
           {
             title: "Наличие MVP или готового продукта",
-            description: "Проекты на стадии прототипа и идеи временно не публикуются",
+            description:
+              "Проекты на стадии прототипа и идеи временно не публикуются",
           },
         ],
       },
@@ -128,7 +131,8 @@ export default {
           },
           {
             title: "Наличие MVP или готового продукта",
-            description: "Проекты на стадии прототипа и идеи временно не публикуются",
+            description:
+              "Проекты на стадии прототипа и идеи временно не публикуются",
           },
         ],
       },
@@ -136,10 +140,15 @@ export default {
 
     const defaultTabPath = tabs.value[0].path;
     const storedTabPath = localStorage.getItem("mainPageType");
-    const currentType = ref(storedTabPath ? JSON.parse(storedTabPath) : defaultTabPath);
+    const currentType = ref(
+      storedTabPath ? JSON.parse(storedTabPath) : defaultTabPath
+    );
 
     const currentTab = computed(() => {
-      return tabs.value.find((tab) => tab.path === currentType.value) || tabs.value[0];
+      return (
+        tabs.value.find((tab) => tab.path === currentType.value) ||
+        tabs.value[0]
+      );
     });
 
     const changeTab = (tab) => {

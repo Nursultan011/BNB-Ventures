@@ -6,8 +6,11 @@
           <h2 class="title">
             Статьи, новости и анонсы в сфере венчурных инвестиций
           </h2>
-          <BorderButton>Смотреть все</BorderButton>
+          <BorderButton @click="redirect('/articles')"
+            >Смотреть все</BorderButton
+          >
         </div>
+
         <div class="main-articles__cards">
           <div
             class="main-articles__card"
@@ -15,23 +18,20 @@
             :key="i"
           >
             <div class="img">
-              <img
-                v-if="item.img"
-                :src="require(`../../../assets/images/${item.img}`)"
-                alt=""
-              />
+              <img v-if="item.banner" :src="item.banner" alt="" />
+              <img v-else src="@/assets/images/articles-default.png" alt="" />
             </div>
             <div class="wrap">
-              <span>
-                {{ item.date }}
+              <span v-if="item.created">
+                {{ formatDate(item.created) }}
               </span>
-              <h3>
+              <h3 v-if="item.title">
                 {{ item.title }}
               </h3>
-              <p>
-                {{ item.description }}
+              <p v-if="item.content">
+                {{ item.content }}
               </p>
-              <button>
+              <button @click="redirect('/articles/' + item.id)">
                 Подробнее
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -58,46 +58,40 @@
 
 <script>
 import BorderButton from "@/components/UIKit/BorderButton.vue";
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
+  props: ["articles"],
   components: {
     BorderButton,
   },
-  setup() {
-    const articles = ref([
-      {
-        img: "article1.jpg",
-        date: "01/10/2023",
-        title: "Инновационные тренды 2023: что следует ожидать",
-        description:
-          "Наш аналитический отдел подготовил обзор самых горячих инновационных трендов на 2023 год",
-      },
-      {
-        img: "article2.jpg",
-        date: "01/10/2023",
-        title: "Отчет о семинаре по стартап-финансированию",
-        description:
-          "Приглашаем всех стартап-основателей и инвесторов на наш семинар по финансированию стартапов. Узнайте секреты успешного привлечения инвестиций и развития вашего бизнеса.",
-      },
-      {
-        img: "article3.jpg",
-        date: "01/10/2023",
-        title: "Наш последний успешный инвесторский раунд!",
-        description:
-          "Мы с гордостью объявляем о завершении нашего самого успешного инвестиционного раунда до сих пор. Узнайте больше о наших новых партнерах и проектах, в которые мы вложились",
-      },
-      {
-        img: "article4.jpg",
-        date: "01/10/2023",
-        title: "Наш венчурный эксперт в эфире о финансах стартапов",
-        description:
-          "Наш главный эксперт по венчурным инвестициям будет гостем на радио/телевизионном шоу",
-      },
-    ]);
+  setup(props) {
+    const router = useRouter();
+
+    const articles = computed(() => props.articles);
+
+    const redirect = (event) => {
+      router.push({ path: event });
+    };
+
+    const formatDate = (isoString) => {
+      const date = new Date(isoString);
+      return date.toLocaleDateString("ru-RU", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      });
+    };
 
     return {
+      router,
       articles,
+      redirect,
+      formatDate,
     };
   },
 };

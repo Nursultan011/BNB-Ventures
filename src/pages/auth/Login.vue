@@ -19,9 +19,6 @@
               type="password"
               placeholder="Введите пароль"
             />
-            <span v-if="errorDescription" class="error-message">
-              {{ errorDescription }}
-            </span>
           </div>
           <div class="auth__setting">
             <div class="remember">
@@ -30,7 +27,16 @@
             </div>
             <div class="forgot">Забыл пароль?</div>
           </div>
-          <Button type="submit">Войти</Button>
+          <div v-if="hasErrors" class="error-message">
+            <div
+              class="haserror"
+              v-for="(errors, field) in errorMessages"
+              :key="field"
+            >
+              {{ field }}: {{ formatError(errors) }}
+            </div>
+          </div>
+          <Button type="submit" :disabled="!isFormValid">Войти</Button>
           <div class="auth__registr">
             Нет аккаунта?
             <router-link to="/registration">Зарегистрироваться</router-link>
@@ -44,7 +50,7 @@
 
 <script>
 import Button from "@/components/UIKit/MainButton.vue";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 import { useRoute, useRouter } from "vue-router";
 
@@ -55,30 +61,50 @@ export default {
   setup() {
     const router = useRouter();
     const store = useStore();
-    const errorDescription = ref();
+    const errorMessages = ref({});
 
     const form = ref({
       email: "",
       password: "",
     });
 
+    const isFormValid = computed(() => {
+      return form.value.email !== "" && form.value.password !== "";
+    });
+
+    const hasErrors = computed(
+      () => Object.keys(errorMessages.value).length > 0
+    );
+
+    const formatErrorMessage = (error) => {
+      if (Array.isArray(error)) {
+        return error.join(" ");
+      }
+      return error;
+    };
+
+    const formatError = (errors) => {
+      return Array.isArray(errors) ? errors.join(", ") : errors;
+    };
+
     const submit = () => {
+      errorMessages.value = {};
+
       store
         .dispatch("auth/login", {
           email: form.value.email,
           password: form.value.password,
         })
         .then((res) => {
-          console.log(res);
-
           if (res && res.token) {
-            router.push({ path: "/" });
+            window.location.href = "/form";
           }
         })
         .catch((err) => {
-          console.log(err);
-          if (err && err.data && err.data.detail) {
-            errorDescription.value = err.data.detail;
+          if (err && err.data) {
+            Object.keys(err.data).forEach((field) => {
+              errorMessages.value[field] = formatErrorMessage(err.data[field]);
+            });
           }
         });
     };
@@ -88,7 +114,10 @@ export default {
       store,
       form,
       submit,
-      errorDescription,
+      isFormValid,
+      hasErrors,
+      errorMessages,
+      formatError,
     };
   },
 };

@@ -14,13 +14,14 @@ const actions = {
   async login({ commit }, { email, password }) {
     try {
       const response = await axiosInstance.post('/users/login/', { email, password });
-      commit('setUser', response.data);
 
-      if (response.data.token) {
+      if (response.data && response.data.token) {
         localStorage.setItem("setUser", JSON.stringify(response.data))
+        commit('setUser', response.data);
+
+        return response.data;
       }
 
-      return response.data;
     } catch (error) {
       console.error('Ошибка аутентификации', error);
       throw error.response;
@@ -38,7 +39,7 @@ const actions = {
     } catch (error) {
       console.error('Ошибка аутентификации', error);
       // Обработка ошибок
-      throw error.response;
+      throw error;
     }
   },
   async sendCode({ commit }, email) {

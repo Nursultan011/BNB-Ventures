@@ -20,6 +20,16 @@
 				font-size: 14px;
 				color: $black-color;
 				font-weight: 500;
+				img{
+					width: 24px;
+					height: 24px;
+				}
+				svg{
+					transition: 0.25s;
+				}
+				&-active{
+					transform: rotate(180deg);
+				}
 			}
 			.langs {
 				position: absolute;
@@ -27,7 +37,7 @@
 				box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.08);
 				border-radius: 5px;
 				width: 100px;
-				padding: 5px 10px;
+				padding: 8px 10px;
 				top: 30px;
 				left: -10px;
 				&-item {
@@ -40,12 +50,15 @@
           &:hover{
             color: $main-color;
           }
-          svg{
+          svg, img{
             width: 24px;
             height: 18px;
           }
-					&:last-child {
-						margin-top: 5px;
+					& + .langs-item{
+						margin-top: 8px;
+					}
+					&-active{
+						color: $main-color;
 					}
 				}
 			}
@@ -170,8 +183,14 @@
 			transition: 0.25s;
 			svg {
 				margin-left: 4px;
+        transition: 0.25s;
 			}
 		}
+    .selected.active{
+      svg{
+        transform: rotate(180deg);
+      }
+    }
 	}
 }
 

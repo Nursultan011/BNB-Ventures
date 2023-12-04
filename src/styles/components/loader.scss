@@ -12,18 +12,15 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   margin-right: auto;
-  img{
-    max-width: 130px;
-    width: 0;
-    max-height: 100px;
-    animation: loadAnimation 1.5s infinite;
-    position: relative;
+  p{
+    margin: 24px 0 0 0;
+    max-width: 282px;
+    font-size: 16px;
+    color: $black-color;
+    text-align: center;
+    font-weight: 500;
   }
 }
 
-@keyframes loadAnimation {
-  to {
-    width: 100%; /* Логотип расширяется до полной ширины */
-  }
-}

@@ -3,11 +3,25 @@
 	&__inner {
 		padding: 40px 0 85px 0;
 		.pending {
-			font-size: 24px;
-			font-weight: 400;
 			text-align: center;
-			padding-top: 240px;
-			padding-bottom: 195px;
+			padding-top: 120px;
+			padding-bottom: 200px;
+			p{
+				font-size: 24px;
+				font-weight: 500;
+				margin: 24px 0 0 0;
+			}
+		}
+		.otp-repeat{
+			margin-bottom: 24px;
+			span{
+				color: $grey-500;
+				font-size: 14px;
+				font-weight: 400;
+			}
+		}
+		.otp-button{
+			margin-bottom: 0 !important;
 		}
 	}
 	&__title {
@@ -266,6 +280,9 @@
 	}
 	.text-field{
 		margin-bottom: 24px;
+		&:last-child{
+			margin-bottom: 0;
+		}
 		select{
 			appearance: none;
 			-webkit-appearance: none;
@@ -277,15 +294,69 @@
 		textarea{
 			padding: 20px 16px;
 		}
-		.input-img{
-			border: 1px dashed var(--BnB_Grey-500, #767A87);
-			background: #FFF;
-			height: 56px;
-			text-align: center;
-			display: flex;
-			justify-content: center;
-			align-items: center;
-			margin-bottom: 8px;
+		.upload-image{
+			input{
+				display: none;
+			}
+			.upload-placeholder{
+				cursor: pointer;
+				width: 100%;
+				height: 56px;
+				border: 1px dashed #D2D4DB;
+				background: #FFF;
+				text-align: center;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				margin-bottom: 8px;
+				font-size: 15px;
+				color: $grey-500;
+				font-weight: 400;
+				position: relative;
+				overflow: hidden;
+				padding: 8px 16px;
+			}
+			.image-preview{
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				padding-left: 16px;
+				padding-right: 16px;
+				height: 100%;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				width: 100%;
+				&>div{
+					display: flex;
+					align-items: center;
+					p{
+						margin-left: 16px;
+						font-size: 16px;
+						color: $black-color;
+					}
+				}
+				img{
+					height: 40px;
+					width: 40px;
+					object-fit: contain;
+					object-position: center;
+					border-radius: 5px;
+				}
+				.remove-image{
+					width: 24px;
+					height: 24px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					svg{
+						width: 100%;
+						height: 100%;
+					}
+				}
+			}
 		}
 	}
 	&__title{
@@ -294,5 +365,26 @@
 		font-size: 32px;
 		text-align: center;
 		margin-bottom: 32px;
+	}
+}
+
+@media (max-width: 580px){
+	.auth{
+		&__inner{
+			.pending{
+				padding: 80px 0;
+				p{
+					font-size: 20px;
+				}
+			}
+		}
+	}
+	.registration{
+		&__cards{
+			flex-direction: column;
+		}
+		&__card{
+			width: 100%;
+		}
 	}
 }
