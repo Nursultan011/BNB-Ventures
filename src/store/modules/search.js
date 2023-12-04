@@ -129,6 +129,19 @@ const actions = {
       // Обработка ошибок
     }
   },
+  async getInvestor({ commit, rootState }, id) {
+    try {
+      const response = await axiosInstance.get(`profiles/visitors/investors/${id}`);
+
+      if (response && response.data) {
+        commit('setInvestor', response.data);
+
+        return response.data;
+      }
+    } catch (error) {
+      console.error('Ошибка:', error)
+    }
+  },
   async getSpecialists({ commit, rootState }, filters) {
     try {
       let url = 'profiles/visitors/specialists/';
@@ -223,6 +236,9 @@ const mutations = {
   },
   setInvestors(state, data) {
     state.investors = data;
+  },
+  setInvestor(state, data) {
+    state.investor = data;
   },
   setSpecialists(state, data) {
     state.specialists = data;

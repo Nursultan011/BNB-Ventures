@@ -45,10 +45,14 @@
             <div class="search__cards" v-if="cards && cards.length > 0">
               <div class="search__card" v-for="(item, i) in cards" :key="i">
                 <div class="icon">
-                  <img v-if="item.logo" :src="item.logo" alt="" />
+                  <img
+                    v-if="item.profile_image"
+                    :src="item.profile_image"
+                    alt=""
+                  />
                 </div>
                 <div class="content">
-                  <h3 v-if="item.startup_name">{{ item.startup_name }}</h3>
+                  <h3 v-if="item.contact_name">{{ item.contact_name }}</h3>
                   <p v-if="item.description">
                     {{ item.description }}
                   </p>
@@ -124,7 +128,7 @@ export default {
     };
 
     const detailPage = (id) => {
-      router.push("/corporations/" + id);
+      router.push("/investors/" + id);
     };
 
     const updateSelectedFilters = (filterId, filterCategory) => {
