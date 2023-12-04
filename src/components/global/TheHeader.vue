@@ -337,6 +337,8 @@ export default {
       isMenuOpen.value = !isMenuOpen.value;
     };
 
+    const mobileMenuOpened = ref(false);
+
     return {
       router,
       route,
@@ -349,7 +351,7 @@ export default {
       menuSettings,
       isMenuOpen,
       toggleMenu,
-      selectLang,
+      mobileMenuOpened,
     };
   },
 };
