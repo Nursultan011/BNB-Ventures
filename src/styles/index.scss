@@ -51,11 +51,11 @@ body {
 	}
 }
 
-// @media (max-width: 1260px){
-//   body{
-//     display: none;
-//   }
-// }
+@media (min-width: 581px) and (max-width: 1260px){
+  body{
+    display: none;
+  }
+}
 
 .transparent {
 	background: transparent !important;
@@ -148,6 +148,8 @@ body {
 @media (max-width: 580px) {
 	.title {
 		font-size: 32px;
+		font-weight: 600;
+		line-height: 120%;
 	}
 }
 

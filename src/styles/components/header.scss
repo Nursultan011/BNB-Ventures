@@ -33,7 +33,17 @@
 				&-item {
 					display: flex;
 					align-items: center;
-					gap: 10px;
+					gap: 8px;
+          cursor: pointer;
+          font-size: 14px;
+          font-weight: 500;
+          &:hover{
+            color: $main-color;
+          }
+          svg{
+            width: 24px;
+            height: 18px;
+          }
 					&:last-child {
 						margin-top: 5px;
 					}
@@ -167,6 +177,22 @@
 
 @media (max-width: 1000px) {
 	.header {
+    &__inner{
+      padding: 20px 0;
+      nav.opened{
+        ul{
+          padding-left: 0;
+        }
+      }
+    }
+    &__wrap{
+      .language{
+        display: none;
+      }
+    }
+    &__account{
+      display: none;
+    }
 		.menu-icon {
 			display: flex;
 			margin-left: 10px;
@@ -182,8 +208,10 @@
 				left: -100%;
 				background-color: #fff;
 				display: flex;
-				justify-content: center;
-				align-items: center;
+        padding-left: 16px;
+        padding-top: 120px;
+        justify-content: flex-start;
+        align-items: flex-start;
 				transition: all 0.3s ease-in-out;
 				&.opened {
 					left: 0;
@@ -191,9 +219,9 @@
 				ul {
 					flex-direction: column;
 					justify-content: center;
-					align-items: center;
 					li {
-						font-size: 20px;
+						font-size: 16px;
+            font-weight: 600;
 					}
 					li + li {
 						margin-left: 0;

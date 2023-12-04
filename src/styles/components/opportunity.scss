@@ -71,3 +71,23 @@
     }
   }
 }
+
+@media (max-width: 1000px){
+  .opportunity{
+    &__inner{
+      .splide__arrows{
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        .splide__arrow{
+          left: auto;
+          top: auto;
+          position: relative;
+        }
+        .splide__arrow--next{
+          left: 16px; 
+        }
+      }
+    }
+  }
+}
