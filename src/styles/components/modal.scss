@@ -13,6 +13,11 @@
   justify-content: center;
   align-items: center;
   padding: 5vh 16px;
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  &::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+  }
   &__inner{
     background: $white;
     max-width: 420px;
@@ -21,6 +26,11 @@
     max-height: 90vh;
     background: $white;
     overflow: auto;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;
+    &::-webkit-scrollbar { 
+      display: none;  /* Safari and Chrome */
+    }
     .auth__form{
       max-width: 100%;
       padding: 0;
@@ -47,6 +57,7 @@
       margin: 0;
       width: 24px;
       height: 24px;
+      cursor: pointer;
     }
   }
 }

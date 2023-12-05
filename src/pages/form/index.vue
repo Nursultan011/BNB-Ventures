@@ -21,8 +21,8 @@
                 <img v-if="form && form.logo" :src="form.logo" alt="" />
               </div>
               <div class="info">
-                <p v-if="form && form.contact_name">
-                  {{ form.contact_name }}
+                <p v-if="form && form.public_name">
+                  {{ form.public_name }}
                 </p>
                 <span v-if="form && form.views">
                   {{ form.views }} просмотров
@@ -109,8 +109,8 @@
                   <label for="">Стадия развития</label>
                   <span>
                     <span v-for="(item, i) in form.stage" :key="i">
-                      {{ item
-                      }}<span
+                      {{ item }}
+                      <span
                         style="margin-right: 6px"
                         v-if="i < form.stage.length - 1"
                         >,
@@ -146,12 +146,12 @@
                     </div>
                   </span>
                 </div>
-                <div class="full">
+                <div class="full" v-if="form && form.website">
                   <label for="">Ссылка на проект</label>
-                  <span> https://www.smartremont.kz/ </span>
+                  <span> {{ form.website }} </span>
                 </div>
                 <div class="full-item">
-                  <div class="item">
+                  <!-- <div class="item">
                     <label for="">Лого</label>
                     <div class="item-content">
                       <img src="../../assets/images/member1.png" alt="" />
@@ -170,7 +170,7 @@
                         <p class="item-date">Добавлено в 23.10.2023</p>
                       </div>
                     </div>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -200,46 +200,46 @@
                 </svg>
               </div>
               <div class="form-page__card-category">
-                <div class="full">
+                <div class="full" v-if="form && form.public_name">
                   <label for="">Публичное название</label>
-                  <span> SmartRemont </span>
+                  <span> {{ form.public_name }} </span>
                 </div>
                 <div class="fulls">
-                  <div class="full">
+                  <div class="full" v-if="form && form.organization_name">
                     <label for="">Наименование организации</label>
-                    <span> ТОО “СмартРемонт” </span>
+                    <span> {{ form.organization_name }} </span>
                   </div>
-                  <div class="full">
+                  <div class="full" v-if="form && form.organization_id">
                     <label for="">Идентификационный номер</label>
-                    <span> 1234567890 </span>
+                    <span> {{ form.organization_id }} </span>
                   </div>
-                  <div class="full">
+                  <!-- <div class="full">
                     <label for="">Модели продаж</label>
                     <span> Прямые продажи, Лицензия </span>
-                  </div>
-                  <div class="full">
+                  </div> -->
+                  <div class="full" v-if="form && form.country">
                     <label for="">Страна регистрации</label>
-                    <span> Казахстан </span>
+                    <span> {{ form.country }} </span>
                   </div>
-                  <div class="full">
+                  <!-- <div class="full">
                     <label for="">Год основания</label>
                     <span> 2023 </span>
-                  </div>
-                  <div class="full">
+                  </div> -->
+                  <!-- <div class="full">
                     <label for="">Количество сотрудников</label>
                     <span> 20 </span>
-                  </div>
-                  <div class="full">
+                  </div> -->
+                  <div class="full" v-if="form && form.contact_name">
                     <label for="">Контактное лицо</label>
-                    <span> Иван Иванов </span>
+                    <span> {{ form.contact_name }} </span>
                   </div>
-                  <div class="full">
+                  <div class="full" v-if="form && form.phone">
                     <label for="">Номер телефона</label>
-                    <span> +7 (777) 123-45-67 </span>
+                    <span> {{ form.phone }} </span>
                   </div>
-                  <div class="full">
+                  <div class="full" v-if="form && form.email">
                     <label for="">Электронная почта</label>
-                    <span> ivanov@gmail.com </span>
+                    <span> {{ form.email }} </span>
                   </div>
                 </div>
               </div>

@@ -10,7 +10,7 @@
           <li class="breadcrumb-item active" aria-current="page">Корпорации</li>
         </Breadcrumb>
         <p class="title">Корпорации</p>
-        <div class="description" v-if="cards">
+        <div class="description desktop" v-if="cards">
           Всего {{ cards.length }} корпорации
         </div>
         <div class="search__wrap">
@@ -44,8 +44,15 @@
             </div>
           </div>
           <div class="search__content">
-            <div class="search__input">
+            <div class="search__input desktop">
               <input type="text" placeholder="Поиск" />
+            </div>
+
+            <div class="search__input search__mobile">
+              <input type="text" placeholder="Поиск" />
+              <div class="description" v-if="cards">
+                Всего {{ cards.length }} стартапов
+              </div>
             </div>
             <div class="search__cards" v-if="cards && cards.length > 0">
               <div class="search__card" v-for="(item, i) in cards" :key="i">

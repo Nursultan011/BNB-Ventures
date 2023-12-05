@@ -14,6 +14,9 @@
       font-weight: 400;
     }
   }
+  &__mobile{
+    display: none;
+  }
   &__wrap{
     margin-top: 24px;
     display: flex;
@@ -45,6 +48,7 @@
           input{
             z-index: 2;
             opacity: 0;
+            cursor: pointer;
           }
           .checkmark{
             width: 16px;
@@ -171,6 +175,12 @@
         cursor: pointer;
         img, svg{
           margin-left: 8px;
+          transition: 0.25s;
+        }
+        &:hover{
+          img,svg{
+            margin-left: 12px;
+          }
         }
       }
     }
@@ -339,10 +349,23 @@
 
 @media (max-width: 580px){
   .search{
+    .desktop{
+      display: none;
+    }
     &__wrap{
       flex-direction: column;
       .filters{
         width: 100%;
+        display: none;
+      }
+    }
+    &__mobile{
+      display: block;
+      .description{
+        color: $grey-500;
+        margin-top: 24px;
+        font-size: 16px;
+        font-weight: 400;
       }
     }
     &__content{
@@ -372,6 +395,11 @@
       .search__card{
         width: 100%;
         margin-right: 0 !important;
+        .content{
+          h3{
+            margin-top: 0;
+          }
+        }
       }
     }
   }

@@ -12,7 +12,7 @@
           </li>
         </Breadcrumb>
         <p class="title">Стартапы</p>
-        <div class="description" v-if="cards">
+        <div class="description desktop" v-if="cards">
           Всего {{ cards.length }} стартапов
         </div>
         <div class="search__wrap">
@@ -76,7 +76,6 @@
                 <span>{{ flt.name }}</span>
               </div>
             </div>
-
             <div
               class="filters__items"
               v-if="filters && filters['selling-models']"
@@ -95,8 +94,15 @@
             </div>
           </div>
           <div class="search__content">
-            <div class="search__input">
+            <div class="search__input desktop">
               <input type="text" placeholder="Поиск" />
+            </div>
+
+            <div class="search__input search__mobile">
+              <input type="text" placeholder="Поиск" />
+              <div class="description" v-if="cards">
+                Всего {{ cards.length }} стартапов
+              </div>
             </div>
 
             <div class="search__cards" v-if="cards && cards.length > 0">

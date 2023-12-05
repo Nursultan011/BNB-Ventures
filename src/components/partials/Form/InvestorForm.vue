@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <Loader v-if="isLoading" />
+  <div v-else>
     <p class="questionnaire__title">Анкета инвестора бизнес-ангела</p>
     <form class="questionnaire auth__form">
       <h3>Основная информация</h3>
@@ -23,11 +24,17 @@
           placeholder="+7 (777) 123 45 67"
         />
       </div>
-      <div class="text-field">
+      <div class="text-field" v-if="filters && filters['countries']">
         <label for="">Страна регистрации</label>
-        <select>
+        <select v-model="form.country" aria-placeholder="Выберите страну">
           <option value="">Выберите страну</option>
-          <option value="">Казахстан</option>
+          <option
+            v-for="(item, i) in filters['countries']"
+            :key="i"
+            :value="item.id"
+          >
+            {{ item.name }}
+          </option>
         </select>
       </div>
       <div class="text-field">
@@ -65,32 +72,56 @@
         <label for="">Размер инвестиционных средств</label>
         <input v-model="form.invest_sum" type="text" placeholder="$" />
       </div>
-      <div class="text-field">
+      <div class="text-field" v-if="filters && filters['innovation-methods']">
         <label for="">Методы работы с инновациями</label>
-        <select>
+        <select v-model="form.methods">
           <option value="">Выберите методы</option>
-          <option value="">Казахстан</option>
+          <option
+            v-for="(item, i) in filters['innovation-methods']"
+            :key="i"
+            :value="item.id"
+          >
+            {{ item.name }}
+          </option>
         </select>
       </div>
-      <div class="text-field">
+      <div class="text-field" v-if="filters && filters['startup-stages']">
         <label for="">Релевантные стадии развития стартапов</label>
-        <select>
+        <select v-model="form.stage">
           <option value="">Выберите стадии</option>
-          <option value="">Казахстан</option>
+          <option
+            v-for="(item, i) in filters['startup-stages']"
+            :key="i"
+            :value="item.id"
+          >
+            {{ item.name }}
+          </option>
         </select>
       </div>
-      <div class="text-field">
+      <div class="text-field" v-if="filters && filters['technologies']">
         <label for="">Релевантные технологии стартапов</label>
-        <select>
+        <select v-model="form.technologies">
           <option value="">Выберите технологии</option>
-          <option value="">Казахстан</option>
+          <option
+            v-for="(item, i) in filters['technologies']"
+            :key="i"
+            :value="item.id"
+          >
+            {{ item.name }}
+          </option>
         </select>
       </div>
-      <div class="text-field">
+      <div class="text-field" v-if="filters && filters['industries']">
         <label for="">Релевантные индустрии стартапов</label>
-        <select>
+        <select v-model="form.industries">
           <option value="">Выберите индустрии</option>
-          <option value="">Казахстан</option>
+          <option
+            v-for="(item, i) in filters['industries']"
+            :key="i"
+            :value="item.id"
+          >
+            {{ item.name }}
+          </option>
         </select>
       </div>
       <div class="text-field">
@@ -114,20 +145,28 @@
 </template>
 
 <script>
-import { ref, computed } from "vue";
+import { ref, computed, onMounted } from "vue";
 import ImageUploader from "@/components/UIKit/ImageUploader.vue";
+import { useStore } from "vuex";
+import Loader from "@/components/global/Loader.vue";
+
 export default {
-  components: { ImageUploader },
+  components: { ImageUploader, Loader },
   setup() {
+    const store = useStore();
+    const isLoading = ref(true);
+
+    const filters = computed(() => store.state.search.filters);
+
     const form = ref({
       photo: "",
-      contact_name: "string",
-      email: "user@example.com",
-      phone: "string",
+      contact_name: "",
+      email: "",
+      phone: "",
       country: 0,
-      description: "string",
-      information_source: "Друзья",
-      invest_sum: "string",
+      description: "",
+      information_source: "",
+      invest_sum: "",
       methods: [0],
       stage: [0],
       technologies: [0],
@@ -169,12 +208,25 @@ export default {
       form.value.photo = null;
     };
 
+    const GetFilters = async () => {
+      await store.dispatch("search/getFilters").then((res) => {
+        isLoading.value = false;
+      });
+    };
+
+    onMounted(async () => {
+      await GetFilters();
+    });
+
     return {
+      store,
+      filters,
       form,
       charCount,
       checkLength,
       handleFileUpload,
       removeSelectedImage,
+      isLoading,
     };
   },
 };

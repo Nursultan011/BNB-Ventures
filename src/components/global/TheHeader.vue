@@ -19,6 +19,47 @@
               {{ item.name }}
             </li>
           </ul>
+          <div class="language">
+            <div class="selected" @click="selectLang = !selectLang">
+              <img
+                :src="require(`@/assets/images/${currentFlag}`)"
+                alt="Flag"
+              />
+              <span v-if="currentLanguage === 'en'"> Eng </span>
+              <span v-else-if="currentLanguage === 'ru'"> Рус </span>
+              <span v-else-if="currentLanguage === 'kk'"> Каз </span>
+              <svg
+                :class="{ 'selected-active': selectLang }"
+                xmlns="http://www.w3.org/2000/svg"
+                width="11"
+                height="7"
+                viewBox="0 0 11 7"
+                fill="none"
+              >
+                <path
+                  d="M1 0.75L5.5 5.25L10 0.75"
+                  stroke="#181236"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </div>
+            <div class="langs" v-if="selectLang">
+              <div
+                class="langs-item"
+                v-for="lang in availableLanguages"
+                :key="lang"
+                @click="changeLanguage(lang.value)"
+                :class="{ 'langs-item-active': lang.value === currentLanguage }"
+              >
+                <img
+                  :src="require(`@/assets/images/${flags[lang.value]}`)"
+                  alt="lang"
+                />
+                {{ lang.name }}
+              </div>
+            </div>
+          </div>
         </nav>
         <div class="header__wrap">
           <div class="language">

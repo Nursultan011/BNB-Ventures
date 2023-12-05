@@ -87,6 +87,9 @@
 					}
 				}
 			}
+			.language{
+				display: none;
+			}
 		}
 		.menu {
 			position: absolute;
@@ -232,8 +235,13 @@
         justify-content: flex-start;
         align-items: flex-start;
 				transition: all 0.3s ease-in-out;
+				flex-direction: column;
 				&.opened {
 					left: 0;
+					.language{
+						display: block;
+						margin-top: 24px;
+					}
 				}
 				ul {
 					flex-direction: column;

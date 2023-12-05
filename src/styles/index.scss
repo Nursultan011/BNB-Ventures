@@ -64,7 +64,7 @@ body {
 }
 
 .main-button {
-	background: $main-color;
+	background: #5640FA;
 	border: none;
 	width: 100%;
 	height: 48px;
@@ -75,10 +75,18 @@ body {
 	font-weight: 500;
 	line-height: 20px;
 	color: $white;
+	transition: 0.25s;
 	cursor: pointer;
 	&:disabled{
 		background: $grey-200;
 		color: $grey-400;
+	}
+	&:hover{
+		background: #3D24F9;
+	}
+	&:focus{
+		background: #3D24F9;
+		box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.16) inset;
 	}
 }
 
@@ -95,8 +103,13 @@ body {
 	cursor: pointer;
 	transition: 0.25s;
 	&:hover {
-		background: $main-color;
-		color: $white;
+		background: #D5D0FF;
+		color: #5640FA;
+	}
+	&:focus{
+		background: #D5D0FF;
+		color: #5640FA;
+		border: 2px solid #D5D0FF;
 	}
 }
 
@@ -189,8 +202,9 @@ body {
 @media (max-width: 580px) {
 	.registration-banner {
 		padding: 24px;
-		flex-wrap: wrap;
+		flex-wrap: wrap-reverse;
 		div {
+			margin-top: 24px;
 			width: 100%;
 			p {
 				text-align: center;

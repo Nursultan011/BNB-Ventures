@@ -12,7 +12,7 @@
           </li>
         </Breadcrumb>
         <p class="title">Специалисты</p>
-        <div class="description" v-if="cards">
+        <div class="description desktop" v-if="cards">
           Всего {{ cards.length }} специалистов
         </div>
         <div class="search__wrap">
@@ -46,8 +46,15 @@
             </div>
           </div>
           <div class="search__content">
-            <div class="search__input">
+            <div class="search__input desktop">
               <input type="text" placeholder="Поиск" />
+            </div>
+
+            <div class="search__input search__mobile">
+              <input type="text" placeholder="Поиск" />
+              <div class="description" v-if="cards">
+                Всего {{ cards.length }} стартапов
+              </div>
             </div>
             <div
               class="search__cards specialists__cards"
