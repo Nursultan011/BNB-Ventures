@@ -80,6 +80,10 @@ body {
 	&:disabled{
 		background: $grey-200;
 		color: $grey-400;
+		&:hover{
+			background: $grey-200;
+			color: $grey-400;
+		}
 	}
 	&:hover{
 		background: #3D24F9;
