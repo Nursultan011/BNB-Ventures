@@ -5,14 +5,19 @@
         <div class="faq__wrap">
           <h2 class="title">Часто задаваемые вопросы</h2>
           <p>
-            Если вы не нашли ответа на свой вопрос, то можете написать в нашу службу
-            поддержки
+            Если вы не нашли ответа на свой вопрос, то можете написать в нашу
+            службу поддержки
           </p>
-          <BorderButton>Написать в службу поддержки</BorderButton>
+          <BorderButton @click="openModal"
+            >Написать в службу поддержки</BorderButton
+          >
         </div>
         <div class="faq__items">
           <div class="faq__item" v-for="(item, i) in faqs" :key="i">
-            <div @click="toggleDescription(i)" :class="isOpen[i] ? 'active' : ''">
+            <div
+              @click="toggleDescription(i)"
+              :class="isOpen[i] ? 'active' : ''"
+            >
               <p>{{ item.title }}</p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -34,18 +39,23 @@
         </div>
       </div>
     </div>
+    <SupportModal ref="modalRef" />
   </section>
 </template>
 
 <script>
 import BorderButton from "@/components/UIKit/BorderButton.vue";
+import SupportModal from "@/components/global/SupportModal.vue";
 import { ref } from "vue";
 
 export default {
   components: {
     BorderButton,
+    SupportModal,
   },
   setup() {
+    const modalRef = ref(null);
+
     const faqs = ref([
       {
         title: "Каковы сроки получения ответа на инвестиционное предложение?",
@@ -63,7 +73,8 @@ export default {
           "Мы стараемся рассмотреть каждое предложение внимательно, но сроки ответа могут варьироваться в зависимости от загруженности. Обычно мы стараемся ответить в течение нескольких недель.",
       },
       {
-        title: "Какие виды поддержки вы предоставляете стартапам после инвестиции?",
+        title:
+          "Какие виды поддержки вы предоставляете стартапам после инвестиции?",
         description:
           "Мы стараемся рассмотреть каждое предложение внимательно, но сроки ответа могут варьироваться в зависимости от загруженности. Обычно мы стараемся ответить в течение нескольких недель.",
       },
@@ -78,13 +89,23 @@ export default {
     isOpen.value[0] = true;
 
     const toggleDescription = (index) => {
-      isOpen.value = isOpen.value.map((state, i) => (i === index ? !state : false));
+      isOpen.value = isOpen.value.map((state, i) =>
+        i === index ? !state : false
+      );
+    };
+
+    const openModal = () => {
+      if (modalRef.value) {
+        modalRef.value.open();
+      }
     };
 
     return {
       faqs,
       isOpen,
       toggleDescription,
+      openModal,
+      modalRef,
     };
   },
 };

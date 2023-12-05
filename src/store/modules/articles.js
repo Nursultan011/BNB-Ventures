@@ -62,6 +62,16 @@ const actions = {
       console.error('Ошибка:', error);
       throw error;
     }
+  },
+  async Support({ commit }, body) {
+    try {
+      const response = await axiosInstance.post('/articles/support/', body)
+
+      return response.data;
+    } catch (err) {
+      console.log('Ошибка:', err);
+      throw err.response;
+    }
   }
 };
 
