@@ -1,7 +1,40 @@
 .auth {
 	background-color: #fafafa;
+	&__forgot{
+		.main-button{
+			margin-top: 24px;	
+			margin-bottom: 0 !important;
+		}
+	}
 	&__inner {
 		padding: 40px 0 85px 0;
+		.back{
+			display: flex;
+			align-items: center;
+			text-decoration: none;
+			color: $main-color;
+			font-size: 16px;
+			cursor: pointer;
+			transition: 0.25s;
+			margin-bottom: -24px;
+			svg{
+				margin-right: 16px;
+				transition: 0.25s;
+			}
+			&:hover{
+				svg{
+					margin-right: 20px;
+				}
+			}
+		}
+		.forgot{
+			&__title{
+				font-size: 16px;
+				color: $black-color;
+				line-height: 125%;
+				margin: 0 0 24px;
+			}
+		}
 		.pending {
 			text-align: center;
 			padding-top: 120px;
@@ -162,6 +195,13 @@
 			font-weight: 400;
 			color: $main-color;
 			cursor: pointer;
+			a{
+				text-decoration: none;
+				color: $main-color;
+				&:hover{
+					color: $main-color;
+				}
+			}
 		}
 	}
 	&__agreement {
@@ -371,6 +411,9 @@
 @media (max-width: 580px){
 	.auth{
 		&__inner{
+			.back{
+				margin-bottom: 24px;
+			}
 			.pending{
 				padding: 80px 0;
 				p{

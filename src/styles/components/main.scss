@@ -12,7 +12,7 @@
     width: 600px;
     padding: 100px 0;
     h1{
-      color: $main-color;
+      color: $main-dark-color;
       font-size: 56px;
       font-weight: 500;
       line-height: 100%;
@@ -33,6 +33,7 @@
       margin-top: 40px;
       width: max-content;
       padding: 0 72px;
+      background: $main-dark-color;
     }
   }
 }

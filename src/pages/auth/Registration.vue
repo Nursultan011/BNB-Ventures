@@ -2,7 +2,7 @@
   <section class="auth">
     <div class="container">
       <div class="auth__inner" v-if="steps === 0">
-        <h2 class="auth__title">Регистрация</h2>
+        <h2 class="auth__title">Регистрация {{ thisPage }}</h2>
         <form class="auth__form">
           <div
             class="text-field"
@@ -219,7 +219,7 @@ export default {
         value: "InvestFund",
       },
       {
-        path: "сorporation",
+        path: "corporation",
         value: "Corporation",
       },
       {
@@ -248,6 +248,24 @@ export default {
     const errorMessages = ref({});
     const otp = ref(["", "", "", "", "", ""]);
     const otpInputRefs = ref([]);
+
+    const thisPage = computed(() => {
+      const type = route.params.type;
+      console.log(type);
+      if (type == "startup") {
+        return "Стартап";
+      } else if (type == "investor") {
+        return "Инвестор";
+      } else if (type == "invest-fund") {
+        return "Инвестиционный фонд";
+      } else if (type == "corporation") {
+        return "Корпорация";
+      } else if (type == "specialist") {
+        return "Специалист";
+      } else {
+        return null;
+      }
+    });
 
     const isOtpComplete = computed(() => {
       return otp.value.every((digit) => digit.trim() !== "");
@@ -316,7 +334,7 @@ export default {
     };
 
     const type = (typePath) => {
-      const selectedType = roles.value.find((item) => item.path === typePath);
+      const selectedType = roles.value.find((item) => item.path == typePath);
       return selectedType ? selectedType.value : "None";
     };
 
@@ -337,7 +355,6 @@ export default {
           })
           .then((res) => {
             steps.value = 1;
-            console.log(res, "43434334");
 
             store
               .dispatch("auth/sendCode", {
@@ -428,6 +445,7 @@ export default {
       handleKeyup,
       otpString,
       isOtpComplete,
+      thisPage,
     };
   },
 };

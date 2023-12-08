@@ -1,9 +1,29 @@
 <template>
-  <section class="auth">
+  <section class="auth auth__forgot">
     <div class="container">
       <div class="auth__inner">
-        <h2 class="auth__title">Войти</h2>
+        <router-link to="/login" class="back">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+          >
+            <path
+              d="M15 18L9 12L15 6"
+              stroke="#3D24F9"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            /></svg
+          >Вернуться назад
+        </router-link>
+        <h2 class="auth__title">Восстановить пароль</h2>
         <form @submit.prevent="submit" class="auth__form">
+          <p class="forgot__title">
+            Введите электронную почту которую вы указали при регистрации.
+          </p>
           <div class="text-field">
             <label for="">Электронная почта</label>
             <input
@@ -11,23 +31,6 @@
               type="text"
               placeholder="name@example.com"
             />
-          </div>
-          <div class="text-field">
-            <label for="">Пароль</label>
-            <input
-              v-model="form.password"
-              type="password"
-              placeholder="Введите пароль"
-            />
-          </div>
-          <div class="auth__setting">
-            <div class="remember">
-              <input type="checkbox" />
-              Запомнить меня
-            </div>
-            <div class="forgot">
-              <router-link to="/forgot"> Забыл пароль? </router-link>
-            </div>
           </div>
           <div v-if="hasErrors" class="error-message">
             <div
@@ -38,12 +41,7 @@
               {{ field }}: {{ formatError(errors) }}
             </div>
           </div>
-          <Button type="submit" :disabled="!isFormValid">Войти</Button>
-          <div class="auth__registr">
-            Нет аккаунта?
-            <router-link to="/registration">Зарегистрироваться</router-link>
-          </div>
-          <!-- <div class="or">Или</div> -->
+          <Button type="submit" :disabled="!isFormValid">Отправить</Button>
         </form>
       </div>
     </div>

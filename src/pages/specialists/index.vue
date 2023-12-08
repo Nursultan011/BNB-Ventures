@@ -77,11 +77,6 @@
                     >
                       {{ technology }}
                     </span>
-                    <span
-                      class="transparent"
-                      v-if="item.technologies.length > 3"
-                      >+{{ item.technologies.length - 3 }}</span
-                    >
                   </div>
                   <button @click="detailPage(item.id)">
                     Подробнее

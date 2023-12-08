@@ -10,6 +10,9 @@
         color: $black-color;
         font-weight: 500;
         line-height: 120%;
+        span{
+          color: $main-dark-color;
+        }
       }
     }
     .right{
@@ -32,11 +35,11 @@
           display: flex;
           justify-content: center;
           align-items: center;
-          border: 1px solid $main-color;
+          border: 1px solid $main-dark-color;
           border-radius: 100%;
           font-size: 20px;
           font-weight: 400;
-          color: $main-color;
+          color: $main-dark-color;
           margin-bottom: 16px;
         }
         .title{
@@ -60,8 +63,8 @@
     align-items: flex-start;
     margin-bottom: 24px;
     .active{
-      color: $main-color;
-      border-bottom: 2px solid $main-color;
+      color: $main-dark-color;
+      border-bottom: 2px solid $main-dark-color;
       font-weight: 500;
     }
     span{
