@@ -71,12 +71,22 @@
           </div>
           <div class="search__content">
             <div class="search__input desktop">
-              <input type="text" placeholder="Поиск" />
+              <input
+                v-model="search"
+                @input="performSearch"
+                type="text"
+                placeholder="Поиск"
+              />
             </div>
 
             <div class="search__input search__mobile">
               <div class="search__mobile-head">
-                <input type="text" placeholder="Поиск" />
+                <input
+                  v-model="search"
+                  @input="performSearch"
+                  type="text"
+                  placeholder="Поиск"
+                />
                 <span class="filters__mobile" @click="toggleFilters">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -174,6 +184,7 @@ export default {
     const cards = computed(() => store.state.search.specialists);
     const filters = computed(() => store.state.search.filters);
     const selectedFilters = ref({});
+    const search = ref("");
 
     const InitData = (event) => {
       store.dispatch("search/getSpecialists", event).then((res) => {
@@ -185,6 +196,14 @@ export default {
       await store.dispatch("search/getFilters").then((res) => {
         console.log(res);
       });
+    };
+
+    const performSearch = () => {
+      const searchFilters = {
+        search: [search.value],
+      };
+
+      InitData(searchFilters);
     };
 
     const detailPage = (id) => {
@@ -218,7 +237,6 @@ export default {
 
     const updateIsDesktop = () => {
       isDesktop.value = window.innerWidth >= 580;
-      isFiltersVisible.value = isDesktop.value;
     };
 
     const toggleFilters = () => {
@@ -229,7 +247,7 @@ export default {
 
     onMounted(() => {
       window.addEventListener("resize", updateIsDesktop);
-      updateIsDesktop();
+      isFiltersVisible.value = isDesktop.value;
     });
 
     onUnmounted(() => {
@@ -249,6 +267,8 @@ export default {
       updateIsDesktop,
       isFiltersVisible,
       isDesktop,
+      search,
+      performSearch,
     };
   },
 };
