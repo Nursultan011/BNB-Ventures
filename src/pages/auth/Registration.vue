@@ -352,7 +352,7 @@ export default {
             email: form.value.email,
             phone: form.value.phone,
             password: form.value.password,
-            type: type(route.params.type),
+            profile_type: type(route.params.type),
           })
           .then((res) => {
             steps.value = 1;
