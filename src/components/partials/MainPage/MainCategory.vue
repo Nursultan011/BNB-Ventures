@@ -4,7 +4,13 @@
       <div class="main-category__inner">
         <h2 class="title">Ознакомьтесь с категориями для дальнейшей работы</h2>
         <div class="main-category__cards">
-          <div class="main-category__card" v-for="(item, i) in mainCategory" :key="i">
+          <div
+            class="main-category__card"
+            @click="redirect(item.path)"
+            style="cursor: pointer"
+            v-for="(item, i) in mainCategory"
+            :key="i"
+          >
             <div class="icon" v-if="item.icon" v-html="item.icon"></div>
             <h3>{{ item.title }}</h3>
             <p>{{ item.description }}</p>
@@ -17,9 +23,12 @@
 
 <script>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
   setup() {
+    const router = useRouter();
+
     const mainCategory = ref([
       {
         icon: `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
@@ -28,6 +37,7 @@ export default {
         title: "Стартапам",
         description:
           "Узнайте, как наши инвестиции и экспертиза могут помочь вам развивать свой стартап",
+        path: "/startups",
       },
       {
         icon: `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
@@ -38,6 +48,7 @@ export default {
         title: "Инвесторам",
         description:
           "У нас есть широкий спектр инвестиционных возможностей для стабильной прибыли",
+        path: "/investors",
       },
       {
         icon: `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
@@ -49,6 +60,7 @@ export default {
         title: "Корпорациям",
         description:
           "Узнайте, как наше партнерство может приносить выгоду вашей корпорации",
+        path: "/corporations",
       },
       {
         icon: `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
@@ -61,11 +73,18 @@ export default {
         title: "Специалистам",
         description:
           "Присоединяйтесь к нашей сети и делитесь своими знаниями и опытом с другими участниками",
+        path: "/specialists",
       },
     ]);
 
+    const redirect = (event) => {
+      router.push({ path: event });
+    };
+
     return {
       mainCategory,
+      router,
+      redirect,
     };
   },
 };

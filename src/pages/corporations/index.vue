@@ -14,7 +14,31 @@
           Всего {{ cards.length }} корпорации
         </div>
         <div class="search__wrap">
-          <div class="filters">
+          <div class="filters" v-show="isFiltersVisible">
+            <span class="filters__mobile-close" @click="toggleFilters">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+              >
+                <path
+                  d="M7 7L17 17"
+                  stroke="#181236"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+                <path
+                  d="M7 17L17 7"
+                  stroke="#181236"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </span>
             <p class="filters__title">Фильтр</p>
             <div class="filters__items" v-if="filters && filters.industries">
               <p>Индустрии</p>
@@ -49,7 +73,26 @@
             </div>
 
             <div class="search__input search__mobile">
-              <input type="text" placeholder="Поиск" />
+              <div class="search__mobile-head">
+                <input type="text" placeholder="Поиск" />
+                <span class="filters__mobile" @click="toggleFilters">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      d="M4 4L9 12V18L15 21V12L20 4H4Z"
+                      stroke="#717171"
+                      stroke-width="1.5"
+                      stroke-linecap="square"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </span>
+              </div>
               <div class="description" v-if="cards">
                 Всего {{ cards.length }} стартапов
               </div>
@@ -104,7 +147,7 @@
 <script>
 import Loader from "@/components/global/Loader.vue";
 import Breadcrumb from "@/components/UIKit/Breadcrumb.vue";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, onUnmounted } from "vue";
 import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 import RegistrationBanner from "@/components/global/RegistrationBanner.vue";
@@ -160,6 +203,30 @@ export default {
       InitData();
     });
 
+    const isFiltersVisible = ref(false);
+
+    const isDesktop = ref(window.innerWidth >= 580);
+
+    const updateIsDesktop = () => {
+      isDesktop.value = window.innerWidth >= 580;
+      isFiltersVisible.value = isDesktop.value;
+    };
+
+    const toggleFilters = () => {
+      if (!isDesktop.value) {
+        isFiltersVisible.value = !isFiltersVisible.value;
+      }
+    };
+
+    onMounted(() => {
+      window.addEventListener("resize", updateIsDesktop);
+      updateIsDesktop();
+    });
+
+    onUnmounted(() => {
+      window.removeEventListener("resize", updateIsDesktop);
+    });
+
     return {
       router,
       store,
@@ -169,6 +236,10 @@ export default {
       filters,
       selectedFilters,
       updateSelectedFilters,
+      toggleFilters,
+      updateIsDesktop,
+      isFiltersVisible,
+      isDesktop,
     };
   },
 };

@@ -175,3 +175,27 @@
     }
   }
 }
+
+@media (max-width: 580px){
+  .form-page{
+    &__card{
+      &-category{
+        div{
+          & > span{
+            flex-wrap: wrap;
+            .item{
+              margin: 4px 0;
+            }
+          }
+        }
+        .fulls{
+          display: flex;
+          flex-wrap: wrap;
+          .full{
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
