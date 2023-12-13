@@ -194,6 +194,7 @@ import { ref, watch, computed, nextTick, onMounted, toRaw } from "vue";
 import { useStore } from "vuex";
 import { useRoute } from "vue-router";
 import Pending from "@/components/partials/Auth/Pending.vue";
+import router from "@/router";
 
 export default {
   components: {
@@ -401,9 +402,13 @@ export default {
     };
 
     const confirmEmail = () => {
-      store.dispatch("auth/verification", {
-        code: otpString.value.toUpperCase(),
-      });
+      store
+        .dispatch("auth/verification", {
+          code: otpString.value.toUpperCase(),
+        })
+        .then((res) => {
+          router.push("/login");
+        });
     };
 
     const handleKeyup = (event, index) => {

@@ -60,7 +60,6 @@ const actions = {
       return response.data;
     } catch (error) {
       console.error('Ошибка', error);
-      // Обработка ошибок
       throw error;
     }
   },
