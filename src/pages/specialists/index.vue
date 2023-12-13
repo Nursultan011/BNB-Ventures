@@ -106,7 +106,7 @@
                 </span>
               </div>
               <div class="description" v-if="cards">
-                Всего {{ cards.length }} стартапов
+                Всего {{ cards.length }} специалистов
               </div>
             </div>
             <div

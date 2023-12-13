@@ -104,7 +104,7 @@
                 </span>
               </div>
               <div class="description" v-if="cards">
-                Всего {{ cards.length }} стартапов
+                Всего {{ cards.length }} корпорации
               </div>
             </div>
             <div class="search__cards" v-if="cards && cards.length > 0">
