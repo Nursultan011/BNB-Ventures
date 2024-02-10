@@ -9,6 +9,7 @@
   "dependencies": {
     "@splidejs/splide": "^4.1.4",
     "@splidejs/vue-splide": "^0.6.12",
+    "@vueform/multiselect": "^2.6.6",
     "axios": "^1.6.2",
     "core-js": "^3.8.3",
     "maska": "^2.1.10",

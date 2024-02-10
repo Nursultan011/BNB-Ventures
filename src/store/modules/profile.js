@@ -46,6 +46,32 @@ const actions = {
       // Обработка ошибок
     }
   },
+  async createProfile({ commit, rootState }, body) {
+    try {
+      const rolesEndpoints = {
+        "StartUp": "startups",
+        "Investor": "investors",
+        "InvestFund": "invest-funds",
+        "Corporation": "corporations",
+        "Specialist": "specialists"
+      };
+
+      const user = rootState.auth.user;
+      const token = user.token;
+
+      const response = await axiosInstance.post(`/profiles/users/${rolesEndpoints[user.user.profile_type]}/`, body, {
+        headers: { Authorization: `Token ${token}` }
+      });
+
+      if (response.data) {
+        return response.data;
+      }
+    } catch (error) {
+      if(error && error.response && error.response.data){
+        throw error.response.data;
+      }
+    }
+  },
   async updatePassword({ commit, rootState }, body) {
     try {
       const user = rootState.auth.user;

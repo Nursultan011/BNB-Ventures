@@ -28,7 +28,6 @@
 			}
 		}
 		.forgot{
-			display: none;
 			&__title{
 				font-size: 16px;
 				color: $black-color;
@@ -334,6 +333,25 @@
 		}
 		textarea{
 			padding: 20px 16px;
+		}
+		.radio-button{
+			display: flex;
+			align-items: center;
+			gap: 24px;
+			&>div{
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				input{
+					height: auto;
+					margin-top: 0;
+				}
+				label{
+					margin-bottom: 0;
+					color: $black-color;
+					font-size: 14px;
+				}
+			}
 		}
 		.upload-image{
 			input{

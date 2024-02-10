@@ -1,7 +1,7 @@
 <template>
   <section class="auth auth__forgot">
     <div class="container">
-      <div class="auth__inner">
+      <div class="auth__inner" v-if="steps === 1">
         <router-link to="/login" class="back">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -26,22 +26,53 @@
           </p>
           <div class="text-field">
             <label for="">Электронная почта</label>
-            <input
-              v-model="form.email"
-              type="text"
-              placeholder="name@example.com"
-            />
-          </div>
-          <div v-if="hasErrors" class="error-message">
-            <div
-              class="haserror"
-              v-for="(errors, field) in errorMessages"
-              :key="field"
-            >
-              {{ field }}: {{ formatError(errors) }}
+            <input v-model="email" type="text" placeholder="name@example.com" />
+            <div v-if="formErrors && formErrors.email" class="error-message">
+              <span
+                class="hasError"
+                v-for="(item, i) in formErrors.email"
+                :key="i"
+              >
+                {{ item }}
+              </span>
             </div>
           </div>
           <Button type="submit" :disabled="!isFormValid">Отправить</Button>
+        </form>
+      </div>
+      <div class="auth__inner" v-else-if="steps === 2">
+        <h2 class="auth__title">Подтвердите аккаунт</h2>
+        <form class="auth__form">
+          <div class="description">
+            Мы отправили на почту
+            <span v-if="email">{{ email }}</span> сообщение 6-ти значным кодом,
+            введите его.
+          </div>
+          <div class="otp-input">
+            <input
+              v-for="(digit, index) in otp"
+              :key="index"
+              v-model="otp[index]"
+              @keyup="handleKeyup($event, index)"
+              maxlength="1"
+              class="otp-digit"
+              :autofocus="index === 0"
+            />
+          </div>
+          <div class="otp-repeat">
+            <span v-if="timer > 0">
+              Отправить новый код через {{ timer }} сек
+            </span>
+            <span v-else>Отправить заново</span>
+          </div>
+          <button
+            @click.prevent="confirmEmail"
+            class="main-button otp-button"
+            type="submit"
+            :disabled="!isOtpComplete"
+          >
+            Подтвердить
+          </button>
         </form>
       </div>
     </div>
@@ -61,63 +92,105 @@ export default {
   setup() {
     const router = useRouter();
     const store = useStore();
-    const errorMessages = ref({});
-
-    const form = ref({
-      email: "",
-      password: "",
-    });
+    const steps = ref(1);
+    const formErrors = ref({});
+    const timer = ref(60);
+    const timerInterval = ref(null);
+    const otp = ref(["", "", "", "", "", ""]);
+    const otpInputRefs = ref([]);
+    const email = ref("");
 
     const isFormValid = computed(() => {
-      return form.value.email !== "" && form.value.password !== "";
+      return email.value !== "";
     });
 
-    const hasErrors = computed(
-      () => Object.keys(errorMessages.value).length > 0
-    );
-
-    const formatErrorMessage = (error) => {
-      if (Array.isArray(error)) {
-        return error.join(" ");
-      }
-      return error;
-    };
-
-    const formatError = (errors) => {
-      return Array.isArray(errors) ? errors.join(", ") : errors;
-    };
-
     const submit = () => {
-      errorMessages.value = {};
+      formErrors.value = {};
 
       store
-        .dispatch("auth/login", {
-          email: form.value.email,
-          password: form.value.password,
+        .dispatch("auth/sendCode", {
+          email: email.value,
         })
         .then((res) => {
-          if (res && res.token) {
-            window.location.href = "/form";
+          if (res) {
+            steps.value = 2;
+            startTimer();
           }
         })
         .catch((err) => {
-          if (err && err.data) {
-            Object.keys(err.data).forEach((field) => {
-              errorMessages.value[field] = formatErrorMessage(err.data[field]);
-            });
+          if (err && err.response && err.response.data) {
+            formErrors.value = err.response.data;
           }
         });
+    };
+
+    const handleKeyup = (event, index) => {
+      const { value } = event.target;
+      otpString.value = otp.value.join("");
+      if (value.length > 0 && index < otp.value.length - 1) {
+        const nextInput = event.target.nextElementSibling;
+        if (nextInput) {
+          nextInput.focus();
+        }
+      } else if (value.length === 0 && index > 0) {
+        const prevInput = event.target.previousElementSibling;
+        if (prevInput) {
+          prevInput.focus();
+        }
+      }
+    };
+
+    const confirmEmail = () => {
+      store
+        .dispatch("auth/verification", {
+          code: otpString.value.toUpperCase(),
+        })
+        .then((res) => {
+          router.push("/login");
+        });
+    };
+
+    const isOtpComplete = computed(() => {
+      return otp.value.every((digit) => digit.trim() !== "");
+    });
+
+    const otpString = computed({
+      get: () => otp.value.join(""),
+      set: (newValue) => {
+        const newValues = newValue.split("");
+        for (let i = 0; i < otp.value.length; i++) {
+          otp.value[i] = newValues[i] || "";
+        }
+      },
+    });
+
+    const startTimer = () => {
+      timerInterval.value = setInterval(() => {
+        if (timer.value > 0) {
+          timer.value--;
+        } else {
+          clearInterval(timerInterval.value);
+        }
+      }, 1000);
     };
 
     return {
       router,
       store,
-      form,
+      email,
       submit,
       isFormValid,
-      hasErrors,
-      errorMessages,
-      formatError,
+      formErrors,
+      steps,
+      handleKeyup,
+      timer,
+      timerInterval,
+      otp,
+      otpInputRefs,
+      confirmEmail,
+      isOtpComplete,
+      otpString,
+      startTimer
     };
   },
 };

@@ -39,6 +39,10 @@
     .button-text{
       background: transparent;
       color: $black-color;
+      &:hover, &:focus{
+        background: transparent;
+        color: $main-color;
+      }
     }
     a{
       text-decoration: none;
