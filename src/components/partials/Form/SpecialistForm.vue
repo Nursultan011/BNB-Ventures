@@ -1,5 +1,5 @@
 <template>
-   <Loader v-if="isLoading" />
+  <Loader v-if="isLoading" />
   <div v-else>
     <p class="questionnaire__title">Анкета специалиста</p>
     <form class="questionnaire auth__form">
@@ -28,15 +28,13 @@
       </div>
       <div class="text-field" v-if="filters && filters.industries">
         <label for="">Индустрии</label>
-        <select v-model="form.industries" required>
-          <option
-            v-for="(item, i) in filters.industries"
-            :key="i"
-            :value="item.id"
-          >
-            {{ item.name }}
-          </option>
-        </select>
+        <CustomMultiselect
+          :options="filters.industries"
+          placeholder="Выберите индустрии"
+          label="name"
+          track-by="id"
+          v-model="form.industries"
+        />
         <div v-if="formErrors && formErrors.industries" class="error-message">
           <span
             class="hasError"
@@ -49,15 +47,13 @@
       </div>
       <div class="text-field" v-if="filters && filters.technologies">
         <label for="">Технологии</label>
-        <select v-model="form.technologies" required>
-          <option
-            v-for="(item, i) in filters.technologies"
-            :key="i"
-            :value="item.id"
-          >
-            {{ item.name }}
-          </option>
-        </select>
+        <CustomMultiselect
+          :options="filters.technologies"
+          placeholder="Выберите технологии"
+          label="name"
+          track-by="id"
+          v-model="form.technologies"
+        />
         <div v-if="formErrors && formErrors.technologies" class="error-message">
           <span
             class="hasError"
@@ -70,11 +66,11 @@
       </div>
       <div class="text-field">
         <label for="">Опыт работы</label>
-        <input
-          v-model="form.experience_years"
-          type="text"
-          placeholder="Напишите опыт работы"
-        />
+        <select v-model="form.experience_years" required>
+          <option v-for="(item, i) in experience_years" :key="i" :value="item">
+            {{ item }}
+          </option>
+        </select>
         <div
           v-if="formErrors && formErrors.experience_years"
           class="error-message"
@@ -158,9 +154,10 @@ import { ref, computed, onMounted } from "vue";
 import ImageUploader from "@/components/UIKit/ImageUploader.vue";
 import { useStore } from "vuex";
 import Loader from "@/components/global/Loader.vue";
+import CustomMultiselect from "@/components/global/Select.vue";
 
 export default {
-  components: { ImageUploader, Loader },
+  components: { ImageUploader, Loader, CustomMultiselect },
   setup() {
     const store = useStore();
     const isLoading = ref(true);
@@ -218,9 +215,7 @@ export default {
 
       await store
         .dispatch("profile/createProfile", form.value)
-        .then((res) => {
-          isLoading.value = false;
-        })
+        .then((res) => {})
         .catch((err) => {
           isLoading.value = false;
 
@@ -231,8 +226,20 @@ export default {
     };
 
     const information_source = ref([
-      'Друзья', 'Знакомые', 'Семья', 'Социальные сети', 'Реклама в интернете', 'Рассылка через почту'
-    ])
+      "Друзья",
+      "Знакомые",
+      "Семья",
+      "Социальные сети",
+      "Реклама в интернете",
+      "Рассылка через почту",
+    ]);
+
+    const experience_years = ref([
+      "Нет опыта",
+      "1-3 года",
+      "3-6 года",
+      "6+ лет",
+    ]);
 
     return {
       store,
@@ -245,7 +252,8 @@ export default {
       isLoading,
       createForm,
       formErrors,
-      information_source
+      information_source,
+      experience_years,
     };
   },
 };

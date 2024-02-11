@@ -1,5 +1,5 @@
 <template>
-   <Loader v-if="isLoading" />
+  <Loader v-if="isLoading" />
   <div v-else>
     <p class="questionnaire__title">Анкета корпорации</p>
     <form class="questionnaire auth__form">
@@ -182,16 +182,13 @@
       <h3>Работа со стартапами</h3>
       <div class="text-field" v-if="filters && filters['innovation-methods']">
         <label for="">Методы работы с инновациями</label>
-        <select v-model="form.methods">
-          <option value="">Выберите методы</option>
-          <option
-            v-for="(item, i) in filters['innovation-methods']"
-            :key="i"
-            :value="item.id"
-          >
-            {{ item.name }}
-          </option>
-        </select>
+        <CustomMultiselect
+          :options="filters['innovation-methods']"
+          placeholder="Выберите метод"
+          label="name"
+          track-by="id"
+          v-model="form.methods"
+        />
         <div v-if="formErrors && formErrors.methods" class="error-message">
           <span
             class="hasError"
@@ -204,16 +201,13 @@
       </div>
       <div class="text-field" v-if="filters && filters['startup-stages']">
         <label for="">Релевантные стадии развития стартапов</label>
-        <select v-model="form.stage">
-          <option value="">Выберите стадии</option>
-          <option
-            v-for="(item, i) in filters['startup-stages']"
-            :key="i"
-            :value="item.id"
-          >
-            {{ item.name }}
-          </option>
-        </select>
+        <CustomMultiselect
+          :options="filters['startup-stages']"
+          placeholder="Выберите стадии"
+          label="name"
+          track-by="id"
+          v-model="form.stage"
+        />
         <div v-if="formErrors && formErrors.stage" class="error-message">
           <span class="hasError" v-for="(item, i) in formErrors.stage" :key="i">
             {{ item }}
@@ -222,16 +216,13 @@
       </div>
       <div class="text-field" v-if="filters && filters['technologies']">
         <label for="">Релевантные технологии стартапов</label>
-        <select v-model="form.technologies">
-          <option value="">Выберите технологии</option>
-          <option
-            v-for="(item, i) in filters['technologies']"
-            :key="i"
-            :value="item.id"
-          >
-            {{ item.name }}
-          </option>
-        </select>
+        <CustomMultiselect
+          :options="filters['technologies']"
+          placeholder="Выберите технологии"
+          label="name"
+          track-by="id"
+          v-model="form.technologies"
+        />
         <div v-if="formErrors && formErrors.technologies" class="error-message">
           <span
             class="hasError"
@@ -244,16 +235,13 @@
       </div>
       <div class="text-field" v-if="filters && filters['industries']">
         <label for="">Релевантные индустрии стартапов</label>
-        <select v-model="form.industries">
-          <option value="">Выберите индустрии</option>
-          <option
-            v-for="(item, i) in filters['industries']"
-            :key="i"
-            :value="item.id"
-          >
-            {{ item.name }}
-          </option>
-        </select>
+        <CustomMultiselect
+          :options="filters['industries']"
+          placeholder="Выберите индустрии"
+          label="name"
+          track-by="id"
+          v-model="form.industries"
+        />
         <div v-if="formErrors && formErrors.industries" class="error-message">
           <span
             class="hasError"
@@ -349,9 +337,10 @@ import { ref, computed, onMounted } from "vue";
 import ImageUploader from "@/components/UIKit/ImageUploader.vue";
 import { useStore } from "vuex";
 import Loader from "@/components/global/Loader.vue";
+import CustomMultiselect from "@/components/global/Select.vue";
 
 export default {
-  components: { ImageUploader, Loader },
+  components: { ImageUploader, Loader, CustomMultiselect },
   setup() {
     const store = useStore();
     const isLoading = ref(true);
@@ -425,9 +414,7 @@ export default {
 
       await store
         .dispatch("profile/createProfile", form.value)
-        .then((res) => {
-          isLoading.value = false;
-        })
+        .then((res) => {})
         .catch((err) => {
           isLoading.value = false;
 
@@ -438,8 +425,13 @@ export default {
     };
 
     const information_source = ref([
-      'Друзья', 'Знакомые', 'Семья', 'Социальные сети', 'Реклама в интернете', 'Рассылка через почту'
-    ])
+      "Друзья",
+      "Знакомые",
+      "Семья",
+      "Социальные сети",
+      "Реклама в интернете",
+      "Рассылка через почту",
+    ]);
 
     return {
       store,
@@ -452,7 +444,7 @@ export default {
       isLoading,
       createForm,
       formErrors,
-      information_source
+      information_source,
     };
   },
 };

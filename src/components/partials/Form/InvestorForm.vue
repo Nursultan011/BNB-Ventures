@@ -24,13 +24,14 @@
       </div>
       <div class="text-field">
         <label for="">Публичная электронная почта</label>
-        <input required v-model="form.email" type="text" placeholder="name@example.kz" />
+        <input
+          required
+          v-model="form.email"
+          type="text"
+          placeholder="name@example.kz"
+        />
         <div v-if="formErrors && formErrors.email" class="error-message">
-          <span
-            class="hasError"
-            v-for="(item, i) in formErrors.email"
-            :key="i"
-          >
+          <span class="hasError" v-for="(item, i) in formErrors.email" :key="i">
             {{ item }}
           </span>
         </div>
@@ -44,18 +45,18 @@
           placeholder="+7 (777) 123 45 67"
         />
         <div v-if="formErrors && formErrors.phone" class="error-message">
-          <span
-            class="hasError"
-            v-for="(item, i) in formErrors.phone"
-            :key="i"
-          >
+          <span class="hasError" v-for="(item, i) in formErrors.phone" :key="i">
             {{ item }}
           </span>
         </div>
       </div>
       <div class="text-field" v-if="filters && filters['countries']">
         <label for="">Страна регистрации</label>
-        <select required v-model="form.country" aria-placeholder="Выберите страну">
+        <select
+          required
+          v-model="form.country"
+          aria-placeholder="Выберите страну"
+        >
           <option value="">Выберите страну</option>
           <option
             v-for="(item, i) in filters['countries']"
@@ -108,7 +109,10 @@
             {{ item }}
           </option>
         </select>
-        <div v-if="formErrors && formErrors.information_source" class="error-message">
+        <div
+          v-if="formErrors && formErrors.information_source"
+          class="error-message"
+        >
           <span
             class="hasError"
             v-for="(item, i) in formErrors.information_source"
@@ -125,7 +129,10 @@
           Размер логотипа: до 1200х1200. Вес файла - не более 5 МБ, формат png,
           jpg.
         </p>
-        <div v-if="formErrors && formErrors.profile_image" class="error-message">
+        <div
+          v-if="formErrors && formErrors.profile_image"
+          class="error-message"
+        >
           <span
             class="hasError"
             v-for="(item, i) in formErrors.profile_image"
@@ -140,7 +147,12 @@
       <h3>Работа со стартапами</h3>
       <div class="text-field">
         <label for="">Размер инвестиционных средств</label>
-        <input v-model="form.invest_sum" type="text" placeholder="$"  @keypress="isNumber" />
+        <input
+          v-model="form.invest_sum"
+          type="text"
+          placeholder="$"
+          @keypress="isNumber"
+        />
         <div v-if="formErrors && formErrors.invest_sum" class="error-message">
           <span
             class="hasError"
@@ -153,16 +165,13 @@
       </div>
       <div class="text-field" v-if="filters && filters['innovation-methods']">
         <label for="">Методы работы с инновациями</label>
-        <select v-model="form.methods">
-          <option value="">Выберите методы</option>
-          <option
-            v-for="(item, i) in filters['innovation-methods']"
-            :key="i"
-            :value="item.id"
-          >
-            {{ item.name }}
-          </option>
-        </select>
+        <CustomMultiselect
+          :options="filters['innovation-methods']"
+          placeholder="Выберите метод"
+          label="name"
+          track-by="id"
+          v-model="form.methods"
+        />
         <div v-if="formErrors && formErrors.methods" class="error-message">
           <span
             class="hasError"
@@ -175,38 +184,28 @@
       </div>
       <div class="text-field" v-if="filters && filters['startup-stages']">
         <label for="">Релевантные стадии развития стартапов</label>
-        <select v-model="form.stage">
-          <option value="">Выберите стадии</option>
-          <option
-            v-for="(item, i) in filters['startup-stages']"
-            :key="i"
-            :value="item.id"
-          >
-            {{ item.name }}
-          </option>
-        </select>
+        <CustomMultiselect
+          :options="filters['startup-stages']"
+          placeholder="Выберите стадии"
+          label="name"
+          track-by="id"
+          v-model="form.stage"
+        />
         <div v-if="formErrors && formErrors.stage" class="error-message">
-          <span
-            class="hasError"
-            v-for="(item, i) in formErrors.stage"
-            :key="i"
-          >
+          <span class="hasError" v-for="(item, i) in formErrors.stage" :key="i">
             {{ item }}
           </span>
         </div>
       </div>
       <div class="text-field" v-if="filters && filters['technologies']">
         <label for="">Релевантные технологии стартапов</label>
-        <select v-model="form.technologies">
-          <option value="">Выберите технологии</option>
-          <option
-            v-for="(item, i) in filters['technologies']"
-            :key="i"
-            :value="item.id"
-          >
-            {{ item.name }}
-          </option>
-        </select>
+        <CustomMultiselect
+          :options="filters['technologies']"
+          placeholder="Выберите технологии"
+          label="name"
+          track-by="id"
+          v-model="form.technologies"
+        />
         <div v-if="formErrors && formErrors.technologies" class="error-message">
           <span
             class="hasError"
@@ -219,16 +218,13 @@
       </div>
       <div class="text-field" v-if="filters && filters['industries']">
         <label for="">Релевантные индустрии стартапов</label>
-        <select v-model="form.industries">
-          <option value="">Выберите индустрии</option>
-          <option
-            v-for="(item, i) in filters['industries']"
-            :key="i"
-            :value="item.id"
-          >
-            {{ item.name }}
-          </option>
-        </select>
+        <CustomMultiselect
+          :options="filters['industries']"
+          placeholder="Выберите индустрии"
+          label="name"
+          track-by="id"
+          v-model="form.industries"
+        />
         <div v-if="formErrors && formErrors.industries" class="error-message">
           <span
             class="hasError"
@@ -265,7 +261,10 @@
             <label for="have_experience_no">Нет</label>
           </div>
         </div>
-        <div v-if="formErrors && formErrors.have_experience" class="error-message">
+        <div
+          v-if="formErrors && formErrors.have_experience"
+          class="error-message"
+        >
           <span
             class="hasError"
             v-for="(item, i) in formErrors.have_experience"
@@ -321,9 +320,10 @@ import { ref, computed, onMounted } from "vue";
 import ImageUploader from "@/components/UIKit/ImageUploader.vue";
 import { useStore } from "vuex";
 import Loader from "@/components/global/Loader.vue";
+import CustomMultiselect from "@/components/global/Select.vue";
 
 export default {
-  components: { ImageUploader, Loader },
+  components: { ImageUploader, Loader, CustomMultiselect },
   setup() {
     const store = useStore();
     const isLoading = ref(true);
@@ -397,9 +397,7 @@ export default {
 
       await store
         .dispatch("profile/createProfile", form.value)
-        .then((res) => {
-          isLoading.value = false;
-        })
+        .then((res) => {})
         .catch((err) => {
           isLoading.value = false;
 
@@ -424,8 +422,13 @@ export default {
     };
 
     const information_source = ref([
-      'Друзья', 'Знакомые', 'Семья', 'Социальные сети', 'Реклама в интернете', 'Рассылка через почту'
-    ])
+      "Друзья",
+      "Знакомые",
+      "Семья",
+      "Социальные сети",
+      "Реклама в интернете",
+      "Рассылка через почту",
+    ]);
 
     return {
       store,
@@ -439,7 +442,7 @@ export default {
       createForm,
       formErrors,
       isNumber,
-      information_source
+      information_source,
     };
   },
 };

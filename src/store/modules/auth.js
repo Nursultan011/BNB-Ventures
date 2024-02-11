@@ -65,7 +65,7 @@ const actions = {
     try {
       localStorage.removeItem("setUser");
       commit('setUser', null);
-
+      window.location.reload();
       return;
     } catch (err) {
       console.log('kj')

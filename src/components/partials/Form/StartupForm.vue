@@ -663,9 +663,7 @@ export default {
 
       await store
         .dispatch("profile/createProfile", form.value)
-        .then((res) => {
-          isLoading.value = false;
-        })
+        .then((res) => {})
         .catch((err) => {
           isLoading.value = false;
 

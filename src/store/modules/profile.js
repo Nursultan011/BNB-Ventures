@@ -59,7 +59,7 @@ const actions = {
       const user = rootState.auth.user;
       const token = user.token;
 
-      if(body){
+      if (body) {
         body.user = user?.user?.id;
       }
 
@@ -68,7 +68,7 @@ const actions = {
         const value = body[key];
         if (Array.isArray(value)) {
           value.forEach((item, index) => {
-            formData.append(`${key}[${index}]`, item);
+            formData.append(`${key}[]`, item);
           });
         } else if (value instanceof File) {
           formData.append(key, value, value.name);
@@ -82,7 +82,7 @@ const actions = {
       });
 
       if (response.data) {
-        getForm();
+        // window.location.reload();
         return response.data;
       }
     } catch (error) {
