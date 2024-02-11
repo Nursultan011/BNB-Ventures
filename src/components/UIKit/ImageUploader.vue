@@ -5,7 +5,7 @@
       type="file"
       id="profile-photo"
       @change="handleFileUpload"
-      accept="image/*"
+      accept="image/*,.pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
       ref="fileInput"
       class="file-input"
     />
@@ -61,11 +61,16 @@ export default {
 
     const handleFileUpload = (event) => {
       const file = event.target.files[0];
+
       if (file && file.type.startsWith("image/")) {
         selectedImage.value = URL.createObjectURL(file);
         imageName.value = file.name;
-        emit("update:modelValue", file);
+      } else {
+        selectedImage.value = file;
+        imageName.value = file.name;
       }
+
+      emit("update:modelValue", file);
     };
 
     const removeSelectedImage = () => {

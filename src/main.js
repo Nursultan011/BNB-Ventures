@@ -7,4 +7,6 @@ import i18n from './plugins/i18n';
 import VueSplide from '@splidejs/vue-splide';
 import '@splidejs/splide/dist/css/splide.min.css';
 
-createApp(App).use(i18n).use(store).use(router).use(VueSplide).mount('#app') 
+const app = createApp(App);
+
+app.use(i18n).use(store).use(router).use(VueSplide).mount('#app') 

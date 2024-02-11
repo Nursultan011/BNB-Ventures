@@ -124,11 +124,15 @@
       </div>
       <div class="text-field">
         <label for="">Откуда вы узнали о BnB Ventures?</label>
-        <input
-          v-model="form.information_source"
-          type="text"
-          placeholder="Откуда вы узнали о BnB Ventures?"
-        />
+        <select v-model="form.information_source" required>
+          <option
+            v-for="(item, i) in information_source"
+            :key="i"
+            :value="item"
+          >
+            {{ item }}
+          </option>
+        </select>
         <div
           v-if="formErrors && formErrors.information_source"
           class="error-message"
@@ -226,6 +230,10 @@ export default {
         });
     };
 
+    const information_source = ref([
+      'Друзья', 'Знакомые', 'Семья', 'Социальные сети', 'Реклама в интернете', 'Рассылка через почту'
+    ])
+
     return {
       store,
       filters,
@@ -237,6 +245,7 @@ export default {
       isLoading,
       createForm,
       formErrors,
+      information_source
     };
   },
 };

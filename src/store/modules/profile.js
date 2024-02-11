@@ -59,15 +59,34 @@ const actions = {
       const user = rootState.auth.user;
       const token = user.token;
 
-      const response = await axiosInstance.post(`/profiles/users/${rolesEndpoints[user.user.profile_type]}/`, body, {
-        headers: { Authorization: `Token ${token}` }
+      if(body){
+        body.user = user?.user?.id;
+      }
+
+      const formData = new FormData();
+      Object.keys(body).forEach(key => {
+        const value = body[key];
+        if (Array.isArray(value)) {
+          value.forEach((item, index) => {
+            formData.append(`${key}[${index}]`, item);
+          });
+        } else if (value instanceof File) {
+          formData.append(key, value, value.name);
+        } else {
+          formData.append(key, value);
+        }
+      });
+
+      const response = await axiosInstance.post(`/profiles/users/${rolesEndpoints[user.user.profile_type]}/`, formData, {
+        headers: { Authorization: `Token ${token}`, }
       });
 
       if (response.data) {
+        getForm();
         return response.data;
       }
     } catch (error) {
-      if(error && error.response && error.response.data){
+      if (error && error.response && error.response.data) {
         throw error.response.data;
       }
     }

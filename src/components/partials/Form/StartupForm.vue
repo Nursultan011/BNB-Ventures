@@ -227,11 +227,6 @@
             {{ item.name }}
           </option>
         </select>
-        <!-- <Multiselect
-          v-model="form.startup_stage"
-          label="name"
-          :options="filters['startup-stages']"
-        /> -->
         <div
           v-if="formErrors && formErrors.startup_stage"
           class="error-message"
@@ -268,15 +263,13 @@
       </div>
       <div class="text-field" v-if="filters && filters.industries">
         <label for="">Индустрии вашего стартапа</label>
-        <select v-model="form.industries" required>
-          <option
-            v-for="(item, i) in filters.industries"
-            :key="i"
-            :value="item.id"
-          >
-            {{ item.name }}
-          </option>
-        </select>
+        <CustomMultiselect
+          :options="filters.industries"
+          placeholder="Выберите индустрии"
+          label="name"
+          track-by="id"
+          v-model="form.industries"
+        />
         <div v-if="formErrors && formErrors.industries" class="error-message">
           <span
             class="hasError"
@@ -289,15 +282,13 @@
       </div>
       <div class="text-field" v-if="filters && filters.technologies">
         <label for="">Технологии вашего стартапа</label>
-        <select v-model="form.technologies" required>
-          <option
-            v-for="(item, i) in filters.technologies"
-            :key="i"
-            :value="item.id"
-          >
-            {{ item.name }}
-          </option>
-        </select>
+        <CustomMultiselect
+          :options="filters.technologies"
+          placeholder="Выберите технологии"
+          label="name"
+          track-by="id"
+          v-model="form.technologies"
+        />
         <div v-if="formErrors && formErrors.technologies" class="error-message">
           <span
             class="hasError"
@@ -310,15 +301,13 @@
       </div>
       <div class="text-field" v-if="filters && filters['bussiness-models']">
         <label for="">Бизнес-модели</label>
-        <select v-model="form.bussiness_models" required>
-          <option
-            v-for="(item, i) in filters['bussiness-models']"
-            :key="i"
-            :value="item.id"
-          >
-            {{ item.name }}
-          </option>
-        </select>
+        <CustomMultiselect
+          :options="filters['bussiness-models']"
+          placeholder="Выберите бизнес-модели"
+          label="name"
+          track-by="id"
+          v-model="form.bussiness_models"
+        />
         <div
           v-if="formErrors && formErrors.bussiness_models"
           class="error-message"
@@ -334,15 +323,13 @@
       </div>
       <div class="text-field" v-if="filters && filters['selling-models']">
         <label for="">Модели продаж</label>
-        <select v-model="form.selling_models" required>
-          <option
-            v-for="(item, i) in filters['selling-models']"
-            :key="i"
-            :value="item.id"
-          >
-            {{ item.name }}
-          </option>
-        </select>
+        <CustomMultiselect
+          :options="filters['selling-models']"
+          placeholder="Выберите модели"
+          label="name"
+          track-by="id"
+          v-model="form.selling_models"
+        />
         <p>Укажите модели взаимодействия с клиентами в вашем бизнесе</p>
         <div
           v-if="formErrors && formErrors.selling_models"
@@ -359,15 +346,13 @@
       </div>
       <div class="text-field" v-if="filters && filters.countries">
         <label for="">Рынки, на которых вы работаете</label>
-        <select v-model="form.countries" required>
-          <option
-            v-for="(item, i) in filters.countries"
-            :key="i"
-            :value="item.id"
-          >
-            {{ item.name }}
-          </option>
-        </select>
+        <CustomMultiselect
+          :options="filters.countries"
+          placeholder="Выберите страны"
+          label="name"
+          track-by="id"
+          v-model="form.countries"
+        />
         <div v-if="formErrors && formErrors.countries" class="error-message">
           <span
             class="hasError"
@@ -555,11 +540,15 @@
       </div>
       <div class="text-field">
         <label for="">Откуда вы узнали о BnB Ventures?</label>
-        <input
-          v-model="form.information_source"
-          type="text"
-          placeholder="Откуда вы узнали о BnB Ventures?"
-        />
+        <select v-model="form.information_source" required>
+          <option
+            v-for="(item, i) in information_source"
+            :key="i"
+            :value="item"
+          >
+            {{ item }}
+          </option>
+        </select>
         <div
           v-if="formErrors && formErrors.information_source"
           class="error-message"
@@ -585,15 +574,24 @@ import { ref, computed, onMounted } from "vue";
 import ImageUploader from "@/components/UIKit/ImageUploader.vue";
 import { useStore } from "vuex";
 import Loader from "@/components/global/Loader.vue";
-import Multiselect from '@vueform/multiselect'
+import CustomMultiselect from "@/components/global/Select.vue";
 
 export default {
-  components: { ImageUploader, Loader },
+  components: { ImageUploader, Loader, CustomMultiselect },
   setup() {
     const store = useStore();
     const isLoading = ref(true);
 
     const filters = computed(() => store.state.search.filters);
+
+    const information_source = ref([
+      "Друзья",
+      "Знакомые",
+      "Семья",
+      "Социальные сети",
+      "Реклама в интернете",
+      "Рассылка через почту",
+    ]);
 
     const formErrors = ref({});
 
@@ -611,17 +609,16 @@ export default {
       description: "",
       startup_stage: 0,
       invest_stage: 0,
-      technologies: [0],
-      industries: [0],
-      bussiness_models: [0],
-      selling_models: [0],
-      countries: [0],
+      technologies: [],
+      industries: [],
+      bussiness_models: [],
+      selling_models: [],
+      countries: [],
       have_sellings: "",
       have_pilots: "",
       active_search: "",
       invested_sum: "",
       investors: "",
-      user: 0,
       information_source: "",
       logo: "",
       presentation: "",
@@ -704,6 +701,7 @@ export default {
       createForm,
       formErrors,
       isNumber,
+      information_source,
     };
   },
 };
